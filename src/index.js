@@ -1,14 +1,8 @@
 // Require the necessary discord.js classes
 import { Client, Collection, Intents } from 'discord.js';
 
-import { changeAddressPrefix } from './util.js';
-
-import {
-  TOKEN,
-  TARGET_CHANNEL_ID,
-  COMMAND_NAME,
-  COMMAND_OPTION_NAME,
-} from './config.js';
+import { TOKEN } from './config.js';
+import registerCommands from './register-commands.js';
 
 const client = new Client({
   intents: [
@@ -18,26 +12,24 @@ const client = new Client({
 });
 
 client.commands = new Collection();
+registerCommands()
+  .then((commands) => commands.forEach(
+    (command) => client.commands.set(command.data.name, command),
+  ));
 
 client.once('ready', () => console.log('Ready!'));
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
+  const command = client.commands.get(interaction.commandName);
 
-  const { commandName } = interaction;
+  if (!command) return;
 
-  if (commandName === COMMAND_NAME) {
-    if (interaction.channel.id !== TARGET_CHANNEL_ID) {
-      await interaction.reply(`❎ Please use this command in the dedicated channel: <#${TARGET_CHANNEL_ID}>`);
-      return;
-    }
-    const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);
-    try {
-      const outputAddress = changeAddressPrefix(inputAddress);
-      await interaction.reply(`✅ Translate \`${inputAddress}\` to \`${outputAddress}\``);
-    } catch (error) {
-      await interaction.reply(`⚠️ Invalid address \`${inputAddress}\`. Please try again.`);
-    }
+  try {
+    await command.execute(interaction);
+  } catch (err) {
+    console.error(err);
+    await interaction.reply({ content: 'Something went wrong', ephemeral: true });
   }
 });
 
