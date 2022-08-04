@@ -1,11 +1,13 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { ContextMenuCommandBuilder } from '@discordjs/builders';
+import { ApplicationCommandType } from 'discord-api-types/v10';
 
 export default {
-  data: new SlashCommandBuilder()
+  data: new ContextMenuCommandBuilder()
     .setName('depub')
-    .setDescription('Tweet the selected message to depub.space'),
+    .setType(ApplicationCommandType.Message),
   async execute(interaction) {
-    console.log(interaction);
-    await interaction.reply('Got it');
+    const msg = await interaction.channel.messages.fetch(interaction.targetId);
+    console.log('msg:', msg);
+    await interaction.reply(msg.content);
   },
 };
