@@ -19,6 +19,7 @@ export default {
       tags: `Discord,${interaction.member.guild.name}`,
       publisher: 'depub',
       description: `${msgUrl} @${msg.author.username}: ${msgContent}`,
+      record_notes: 'A Message posted on depub.space',
     });
 
     await interaction.reply({
