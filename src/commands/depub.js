@@ -8,6 +8,7 @@ export default {
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
     console.log('msg:', msg);
-    await interaction.reply(msg.content);
+    const msgUrl = `https://discordapp.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
+    await interaction.reply(`${msg.content} ${msgUrl}`);
   },
 };
