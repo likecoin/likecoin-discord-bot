@@ -15,11 +15,10 @@ export default {
     iscnUrl.search = new URLSearchParams({
       title: `depub.space-${(new Date()).toISOString()}`,
       url: msgUrl,
-      fingerprint: 'https://depub.blog',
-      type: 'Record',
+      type: 'message',
       tags: `Discord,${interaction.member.guild.name}`,
-      publisher: 'depub.space',
-      description: `${msgUrl}\n@${msg.author.username}: ${msgContent}`,
+      publisher: 'depub',
+      description: `${msgUrl} @${msg.author.username}: ${msgContent}`,
     });
 
     await interaction.reply({
