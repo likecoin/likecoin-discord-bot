@@ -10,7 +10,7 @@ export default {
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
     const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
-    const msgContent = msg.content.substring(0, 2048);
+    const msgContent = msg.content.substring(0, 200);
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     iscnUrl.search = new URLSearchParams({
       title: `depub.space-${(new Date()).toISOString()}`,
@@ -22,7 +22,7 @@ export default {
     });
 
     await interaction.reply({
-      content: `Click this link to continue: ${iscnUrl.toString()}`,
+      content: `${iscnUrl.toString()}`,
       ephemeral: true,
     });
   },
