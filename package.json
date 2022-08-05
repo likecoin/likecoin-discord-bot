@@ -6,8 +6,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "lint": "eslint --fix --ext .js .",
-    "start": "yarn register && yarn server",
-    "register": "node src/register-commands.js",
+    "start": "yarn server",
     "server": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
