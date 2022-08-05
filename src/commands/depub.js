@@ -9,7 +9,7 @@ export default {
     .setType(ApplicationCommandType.Message),
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
-    const msgUrl = `https://discordapp.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
+    const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
     const msgContent = msg.content.substring(0, 2048);
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     iscnUrl.search = new URLSearchParams({
@@ -19,7 +19,7 @@ export default {
       type: 'Record',
       tags: `Discord,${interaction.member.guild.name}`,
       publisher: 'depub.space',
-      description: `${msgUrl}\n${msgContent}`,
+      description: `${msgUrl}\n@${msg.author.username}: ${msgContent}`,
     });
 
     await interaction.reply({
