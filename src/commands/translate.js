@@ -1,6 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { COMMAND_NAME, COMMAND_OPTION_NAME, TARGET_CHANNEL_ID } from '../config.js';
+import { TARGET_CHANNEL_ID } from '../config.js';
 import { changeAddressPrefix } from '../util.js';
+
+const COMMAND_NAME = 'translate';
+const COMMAND_OPTION_NAME = 'address';
 
 export default {
   data: new SlashCommandBuilder()
@@ -17,9 +20,15 @@ export default {
     const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);
     try {
       const outputAddress = changeAddressPrefix(inputAddress);
-      await interaction.reply(`✅ Translate \`${inputAddress}\` to \`${outputAddress}\``);
+      await interaction.reply({
+          content: `✅ Translate \`${inputAddress}\` to \`${outputAddress}\``,
+          ephemeral: true,
+      });
     } catch (error) {
-      await interaction.reply(`⚠ Invalid address \`${inputAddress}\`. Please try again.`);
+      await interaction.reply({
+          content: `⚠ Invalid address \`${inputAddress}\`. Please try again.`,
+          ephemeral: true,
+      });
     }
   },
 };
