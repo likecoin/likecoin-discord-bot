@@ -12,14 +12,14 @@ export default {
     const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
     const msgContent = msg.content.substring(0, 200);
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
-    const guildName = interaction.member.guild.name
+    const guildName = interaction.member.guild.name;
     iscnUrl.search = new URLSearchParams({
       title: `depub.space-${(new Date()).toISOString()}`,
       url: msgUrl,
       type: 'message',
       tags: `Discord,${guildName}`,
       publisher: 'depub',
-      description: `${msgUrl}\n${msg.author.username}: ${msgContent}\n#Discord #${guildName}`,
+      description: `${msgUrl}\n${msg.author.username}: ${msgContent}...\n#Discord #${guildName}`,
       record_notes: 'A Message posted on depub.space',
     });
 

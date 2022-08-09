@@ -21,13 +21,13 @@ export default {
     try {
       const outputAddress = changeAddressPrefix(inputAddress);
       await interaction.reply({
-          content: `✅ Translate \`${inputAddress}\` to \`${outputAddress}\``,
-          ephemeral: true,
+        content: `✅ Translate \`${inputAddress}\` to \`${outputAddress}\``,
+        ephemeral: true,
       });
     } catch (error) {
       await interaction.reply({
-          content: `⚠ Invalid address \`${inputAddress}\`. Please try again.`,
-          ephemeral: true,
+        content: `⚠ Invalid address \`${inputAddress}\`. Please try again.`,
+        ephemeral: true,
       });
     }
   },
