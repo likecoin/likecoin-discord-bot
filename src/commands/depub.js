@@ -5,7 +5,7 @@ import { WIDGET_ENDPOINT } from '../config.js';
 
 export default {
   data: new ContextMenuCommandBuilder()
-    .setName('depub')
+    .setName('Share to DePub')
     .setType(ApplicationCommandType.Message),
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);

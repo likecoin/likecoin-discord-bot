@@ -1,13 +1,14 @@
 // Require the necessary discord.js classes
-import { Client, Collection, Intents } from 'discord.js';
+import pkg from 'discord.js';
+const { Client, Collection, GatewayIntentBits } = pkg;
 
 import { TOKEN } from './config.js';
 import registerCommands from './register-commands.js';
 
 const client = new Client({
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
   ],
 });
 
