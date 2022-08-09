@@ -10,6 +10,7 @@ export default {
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
     const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
+    const isTooLong = msg.content.length > 200;
     const msgContent = msg.content.substring(0, 200);
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     const guildName = interaction.member.guild.name;
@@ -19,7 +20,7 @@ export default {
       type: 'message',
       tags: `Discord,${guildName}`,
       publisher: 'depub',
-      description: `${msgUrl}\n${msg.author.username}: ${msgContent}...\n#Discord #${guildName}`,
+      description: `${msgUrl}\n${msg.author.username}: ${msgContent}${isTooLong ? '...' : ''}\n#Discord #${guildName}`,
       record_notes: 'A Message posted on depub.space',
     });
 
