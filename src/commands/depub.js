@@ -13,7 +13,16 @@ export default {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
     const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
     const isTooLong = msg.content.length > MESSAGE_CONTENT_LIMIT;
-    const msgContent = msg.content.substring(0, MESSAGE_CONTENT_LIMIT);
+    let msgContent = msg.content.substring(0, MESSAGE_CONTENT_LIMIT);
+    msg.mentions.users.forEach((v, k) => {
+      msgContent = msgContent.replace(`<@${k}>`, v.username);
+    })
+    msg.mentions.roles.forEach((v, k) => {
+      msgContent = msgContent.replace(`<@&${k}>`, v.name);
+    })
+    msg.mentions.channels.forEach((v, k) => {
+      msgContent = msgContent.replace(`<#${k}>`, v.name);
+    })
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     const guildName = interaction.member.guild.name;
     iscnUrl.search = new URLSearchParams({
