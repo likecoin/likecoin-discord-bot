@@ -3,6 +3,8 @@ import { ApplicationCommandType } from 'discord-api-types/v10';
 import { URL, URLSearchParams } from 'url';
 import { WIDGET_ENDPOINT } from '../config.js';
 
+const MESSAGE_CONTENT_LIMIT = 200;
+
 export default {
   data: new ContextMenuCommandBuilder()
     .setName('Share to DePub')
@@ -10,8 +12,8 @@ export default {
   async execute(interaction) {
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
     const msgUrl = `https://discord.com/channels/${msg.guildId}/${msg.channelId}/${msg.id}`;
-    const isTooLong = msg.content.length > 200;
-    const msgContent = msg.content.substring(0, 200);
+    const isTooLong = msg.content.length > MESSAGE_CONTENT_LIMIT;
+    const msgContent = msg.content.substring(0, MESSAGE_CONTENT_LIMIT);
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     const guildName = interaction.member.guild.name;
     iscnUrl.search = new URLSearchParams({

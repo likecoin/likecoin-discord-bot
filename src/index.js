@@ -1,9 +1,10 @@
 // Require the necessary discord.js classes
 import pkg from 'discord.js';
-const { Client, Collection, GatewayIntentBits } = pkg;
 
 import { TOKEN } from './config.js';
 import registerCommands from './register-commands.js';
+
+const { Client, Collection, GatewayIntentBits } = pkg;
 
 const client = new Client({
   intents: [
