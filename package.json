@@ -7,6 +7,7 @@
   "scripts": {
     "lint": "eslint --fix --ext .js .",
     "start": "node src/index.js",
+    "delete": "node src/delete-commands.js",
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
