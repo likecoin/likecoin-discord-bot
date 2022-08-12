@@ -16,13 +16,15 @@ export default {
     let msgContent = msg.content.substring(0, MESSAGE_CONTENT_LIMIT);
     msg.mentions.users.forEach((v, k) => {
       msgContent = msgContent.replace(`<@${k}>`, v.username);
-    })
+    });
     msg.mentions.roles.forEach((v, k) => {
       msgContent = msgContent.replace(`<@&${k}>`, v.name);
-    })
+    });
     msg.mentions.channels.forEach((v, k) => {
       msgContent = msgContent.replace(`<#${k}>`, v.name);
-    })
+    });
+    // Remove all unhandled <...>
+    msgContent = msgContent.replace(/<.+>/g, '');
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     const guildName = interaction.member.guild.name;
     iscnUrl.search = new URLSearchParams({
