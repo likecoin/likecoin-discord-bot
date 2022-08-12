@@ -24,7 +24,7 @@ export default {
       msgContent = msgContent.replace(`<#${k}>`, v.name);
     });
     // Remove all unhandled <...>
-    msgContent = msgContent.replace(/<.+>/g, '');
+    msgContent = msgContent.replace(/<:\w+:\d+>/g, '');
     const iscnUrl = new URL('/in/widget/iscn', WIDGET_ENDPOINT);
     const guildName = interaction.member.guild.name;
     iscnUrl.search = new URLSearchParams({
