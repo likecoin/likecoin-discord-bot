@@ -1,5 +1,6 @@
-# Address Prefix Translator
-Translate address between Cosmos prefix and Like prefix.
+# LikeCoin Discord Bot
+- Share Discord message to DePub.space
+- Translate address between Cosmos prefix and Like prefix.
 
 ## Usage
 1. Create a bot at [Discord application page](https://discord.com/developers/applications). 
