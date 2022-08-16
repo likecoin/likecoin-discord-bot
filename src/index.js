@@ -1,10 +1,7 @@
 // Require the necessary discord.js classes
-import pkg from 'discord.js';
-
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { TOKEN } from './config.js';
-import registerCommands from './register-commands.js';
-
-const { Client, Collection, GatewayIntentBits } = pkg;
+import { registerCommands, commands } from './register-commands.js';
 
 const client = new Client({
   intents: [
@@ -14,12 +11,17 @@ const client = new Client({
 });
 
 client.commands = new Collection();
-registerCommands()
-  .then((commands) => commands.forEach(
-    (command) => client.commands.set(command.data.name, command),
-  ));
 
-client.once('ready', () => console.log('Ready!'));
+commands.forEach(
+  (command) => client.commands.set(command.data.name, command),
+);
+
+client.once('ready', () => {
+  Promise.all(
+    client.guilds.cache.map(registerCommands),
+  )
+    .then(() => console.log('Ready'));
+});
 
 client.on('interactionCreate', async (interaction) => {
   const command = client.commands.get(interaction.commandName);
@@ -32,6 +34,11 @@ client.on('interactionCreate', async (interaction) => {
     console.error(err);
     await interaction.reply({ content: 'Something went wrong', ephemeral: true });
   }
+});
+
+client.on('guildCreate', async (guild) => {
+  console.log(`Joined ${guild.name}`);
+  await registerCommands(guild);
 });
 
 client.login(TOKEN);
