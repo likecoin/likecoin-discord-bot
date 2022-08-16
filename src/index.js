@@ -37,7 +37,7 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 client.on('guildCreate', async (guild) => {
-  console.log(`Joined ${guild.name}`);
+  console.log(`Joined ${guild.name}: ${guild.id}`);
   await registerCommands(guild);
 });
 
