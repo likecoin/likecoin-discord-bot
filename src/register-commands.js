@@ -1,7 +1,6 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
-import depub from './commands/depub.js';
-import translate from './commands/translate.js';
+import { depub, translate } from './commands/index.js';
 
 import {
   CLIENT_ID,
