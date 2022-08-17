@@ -2,6 +2,7 @@
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { TOKEN } from './config.js';
 import { registerCommands, commands } from './register-commands.js';
+import { initDB } from './db.js';
 
 const client = new Client({
   intents: [
@@ -41,4 +42,5 @@ client.on('guildCreate', async (guild) => {
   await registerCommands(guild);
 });
 
+initDB();
 client.login(TOKEN);

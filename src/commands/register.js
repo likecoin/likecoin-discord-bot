@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { User } from '../db.js';
 
 const COMMAND_NAME = 'register';
 const COMMAND_OPTION_NAME = 'address';
@@ -12,8 +13,21 @@ export default {
       .setRequired(true)),
   async execute(interaction) {
     const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);
+    console.log(interaction);
+    const { id, username } = interaction.user;
+    const [user, created] = await User.findOrBuild({
+      where: { discordId: id },
+      defaults: { username },
+    });
+    user.set({
+      address: inputAddress,
+    });
+    await user.save();
+    console.log(user.toJSON());
     await interaction.reply({
-      content: `✅ Register \`${inputAddress}\``,
+      content: created
+        ? `✅ Register ${user.username} with \`${user.address}\``
+        : `✅ Update \`${user.username}\` with ${user.address}`,
       ephemeral: true,
     });
   },
