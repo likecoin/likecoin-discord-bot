@@ -1,6 +1,8 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
-import { depub, translate, send } from './commands/index.js';
+import {
+  depub, translate, send, register,
+} from './commands/index.js';
 
 import {
   CLIENT_ID,
@@ -11,6 +13,7 @@ export const commands = [
   depub,
   translate,
   send,
+  register,
 ];
 
 export async function registerCommands(guild) {
