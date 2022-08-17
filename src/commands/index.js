@@ -1,2 +1,3 @@
 export { default as depub } from './depub.js';
 export { default as translate } from './translate.js';
+export { default as send } from './send.js';
