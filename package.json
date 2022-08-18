@@ -1,9 +1,13 @@
 {
-  "name": "address-parser",
+  "name": "likecoin-discord-bot",
   "version": "1.0.0",
   "type": "module",
   "main": "./src/index.js",
   "license": "GPL-3.0",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
     "lint": "eslint --fix --ext .js .",
     "start": "node src/index.js",
@@ -13,6 +17,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.1.0",
     "@discordjs/rest": "^1.0.1",
+    "bcrypt": "^5.0.1",
     "bech32": "^2.0.0",
     "discord-api-types": "^0.37.1",
     "discord.js": "^14.1.2",
