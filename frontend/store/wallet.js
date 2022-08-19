@@ -84,7 +84,7 @@ export const actions = {
     commit('setWallet', wallet)
   },
 
-  async createSendGrant ({ state, commit, dispatch }, { amount }) {
+  async createSendGrant ({ state, commit, dispatch }, { amount, memo }) {
     if (!connector) { dispatch('init') }
 
     commit('setWallet', await connector.initIfNecessary())
@@ -107,6 +107,7 @@ export const actions = {
           amount: `${amount * (10 ** WALLET_CONFIG.coinDecimals)}`,
         }],
         expire,
+        { memo },
       )
       commit('doneTx', result)
     } catch (err) {

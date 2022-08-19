@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     createSendGrant () {
-      this.$store.dispatch('wallet/createSendGrant', { amount: this.amount })
+      this.$store.dispatch('wallet/createSendGrant', { amount: this.amount, memo: this.hash })
     },
   },
 }
