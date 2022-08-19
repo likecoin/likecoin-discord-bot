@@ -24,6 +24,7 @@ export default {
     });
     await user.save();
     console.log(user.toJSON());
+    console.log('user.discordId === id:', user.discordId === id);
     await interaction.reply({
       content: created
         ? `✅ Register ${user.username} with \`${user.address}\``

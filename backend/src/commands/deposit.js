@@ -18,7 +18,9 @@ export default {
     const address = interaction.options.getString(COMMAND_OPTION_NAME);
     console.log(interaction);
     const { id } = interaction.user;
-    const hash = await bcrypt.hash(id, saltRounds);
+    console.log(id);
+    const hash = await bcrypt.hash(String(id), saltRounds);
+    console.log(await bcrypt.compare(String(id), hash));
     const depositURL = new URL('/deposit', UI_URL);
     depositURL.search = new URLSearchParams({
       hash,

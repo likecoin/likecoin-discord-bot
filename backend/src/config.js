@@ -1,16 +1,14 @@
 import 'dotenv/config';
 
-export { ENDPOINT as INDEXER } from '@likecoin-discord-bot/config';
+export {
+  ENDPOINT, API_WALLET_ADDRESS, WIDGET_ENDPOINT, NODE_ENV,
+  WALLET_CONFIG,
+} from '@likecoin-discord-bot/config';
 
 export const {
   TOKEN,
   CLIENT_ID,
-  NODE_ENV,
 } = process.env;
-
-export const WIDGET_ENDPOINT = NODE_ENV === 'production'
-  ? 'https://like.co'
-  : 'https://testnet.like.co';
 
 export const PREFIX_PAIRS = [
   ['cosmos', 'like'],

@@ -12,7 +12,7 @@ User.init({
     type: DataTypes.STRING,
   },
   discordId: {
-    type: DataTypes.BIGINT.UNSIGNED,
+    type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },

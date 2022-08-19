@@ -6,6 +6,11 @@ export const EXPIRATION = 30 // 30 days
 export const ENDPOINT = NODE_ENV === 'development'
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
+
+export const WIDGET_ENDPOINT = NODE_ENV === 'development'
+  ? 'https://testnet.like.co'
+  : 'https://like.co'
+
 export const WALLET_CONFIG = NODE_ENV === 'development'
   ? {
       chainId: 'likecoin-public-testnet-5',
