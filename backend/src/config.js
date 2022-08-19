@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-export { INDEXER } from '@likecoin-discord-bot/config';
+export { ENDPOINT as INDEXER } from '@likecoin-discord-bot/config';
 
 export const {
   TOKEN,

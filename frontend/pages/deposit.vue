@@ -15,14 +15,14 @@
       Sign
     </button>
     <p v-if="txHash">
-      <a :href="`${INDEXER}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a>
+      <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a>
     </p>
   </main>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { WALLET_CONFIG, INDEXER } from '@likecoin-discord-bot/config'
+import { WALLET_CONFIG, ENDPOINT } from '@likecoin-discord-bot/config'
 
 export default {
   name: 'Deposit',
@@ -31,7 +31,7 @@ export default {
     address: '',
     amount: 100,
     demon: WALLET_CONFIG.coinDenom,
-    INDEXER,
+    ENDPOINT,
   }),
   computed: {
     ...mapState('wallet', {

@@ -1,12 +1,17 @@
 import { bech32 } from 'bech32';
-import { User } from './db.js';
+import axios from 'axios';
+import { User } from '../db.js';
 
-import { PREFIX_PAIRS } from './config.js';
+import { PREFIX_PAIRS, INDEXER } from '../config.js';
 
 const prefixMap = new Map();
 PREFIX_PAIRS.forEach(([first, second]) => {
   prefixMap.set(first, second);
   prefixMap.set(second, first);
+});
+
+export const api = axios.create({
+  baseURL: INDEXER,
 });
 
 export function changeAddressPrefix(address) {
@@ -26,5 +31,3 @@ export async function getBalance(discordId) {
   console.log(user.toJSON());
   return 0;
 }
-
-export default changeAddressPrefix;

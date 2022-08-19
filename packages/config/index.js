@@ -3,7 +3,7 @@ export const IPFS_GATEWAY = 'https://cloudflare-ipfs.com'
 export const ARWEAVE_GATEWAY = 'https://arweave.net'
 export const API_WALLET_ADDRESS = 'like1sdz7wpzdazxekr6f4sx33rtc7nra6lu9nxe7yh'
 export const EXPIRATION = 30 // 30 days
-export const INDEXER = NODE_ENV === 'development'
+export const ENDPOINT = NODE_ENV === 'development'
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
 export const WALLET_CONFIG = NODE_ENV === 'development'

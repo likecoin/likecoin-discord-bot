@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { getBalance } from '../util.js';
+import { getBalance } from '../utils/index.js';
 
 const COMMAND_NAME = 'balance';
 
