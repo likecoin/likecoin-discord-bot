@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "start": "yarn --cwd backend start",
-    "dev": "yarn --cwd backend dev & yarn --cwd frontend dev"
+    "dev": "yarn --cwd backend dev & yarn --cwd frontend dev",
+    "lint": "yarn --cwd backend lint & yarn --cwd frontend lint"
   }
 }

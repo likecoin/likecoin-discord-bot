@@ -1,11 +1,10 @@
 <template>
   <main>
-    <h1>LikeCoin Discord Bot</h1>
+    <h1>Deposit</h1>
   </main>
 </template>
-
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'Deposit',
 }
 </script>
