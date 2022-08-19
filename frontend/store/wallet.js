@@ -1,5 +1,6 @@
 import { LikeCoinWalletConnector, LikeCoinWalletConnectorMethodType } from '@likecoin/wallet-connector'
-import { WALLET_CONFIG } from '../config'
+import { ISCNSigningClient } from '@likecoin/iscn-js'
+import { WALLET_CONFIG, API_WALLET_ADDRESS, EXPIRATION } from '../config'
 
 let connector = null
 
@@ -81,5 +82,36 @@ export const actions = {
     const wallet = await connector.openConnectWalletModal()
     if (!wallet) { return }
     commit('setWallet', wallet)
+  },
+
+  async createSendGrant ({ state, commit, dispatch }, { amount }) {
+    if (!connector) { dispatch('init') }
+
+    commit('setWallet', await connector.initIfNecessary())
+    commit('prepareTx')
+    const client = new ISCNSigningClient()
+    await client.connectWithSigner(
+      connector.rpcURL,
+      state.offlineSigner,
+    )
+
+    const expire = new Date()
+    expire.setDate(expire.getDate() + EXPIRATION)
+
+    try {
+      const result = await client.createSendGrant(
+        state.walletAddress,
+        API_WALLET_ADDRESS,
+        [{
+          denom: WALLET_CONFIG.coinMinimalDenom,
+          amount: `${amount * (10 ** WALLET_CONFIG.coinDecimals)}`,
+        }],
+        expire,
+      )
+      commit('doneTx', result)
+    } catch (err) {
+      commit('setError', err)
+      console.error(err)
+    }
   },
 }

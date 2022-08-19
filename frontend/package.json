@@ -12,6 +12,8 @@
     "lintfix": "yarn lint:js --fix"
   },
   "dependencies": {
+    "@cosmjs/stargate": "^0.28.13",
+    "@likecoin/iscn-js": "^0.2.2",
     "@likecoin/wallet-connector": "^0.4.0-alpha.1",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.19.3",
