@@ -19,7 +19,11 @@ export default {
       if (denom !== WALLET_CONFIG.coinMinimalDenom) { throw new Error(`Wrong denom: ${denom}`); }
       const amount = Number(nanoAmount) / (10 ** WALLET_CONFIG.coinDecimals);
       await interaction.reply({
-        content: `Balance: ${amount} ${WALLET_CONFIG.coinDenom}\nExpiration: ${expiration}`,
+        content: `sending address: \`${user.sendAddress}\`
+deposit amount: ${amount} ${WALLET_CONFIG.coinDenom}
+expiration: ${expiration}
+receiving address: \`${user.receiveAddress}\`
+`,
         ephemeral: true,
       });
     } catch (err) {
