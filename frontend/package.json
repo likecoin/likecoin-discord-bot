@@ -12,9 +12,12 @@
     "lintfix": "yarn lint:js --fix"
   },
   "dependencies": {
+    "@likecoin/wallet-connector": "^0.4.0-alpha.1",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.19.3",
     "nuxt": "^2.15.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "vue": "^2.6.14",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",

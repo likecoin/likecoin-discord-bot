@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 const COMMAND_NAME = 'deposit';
 const COMMAND_OPTION_NAME = 'address';
 const saltRounds = 10;
-const UI_URL = 'http://localhost';
+const UI_URL = 'http://localhost:3000';
 
 export default {
   data: new SlashCommandBuilder()
