@@ -16,7 +16,10 @@ User.init({
     unique: true,
     allowNull: false,
   },
-  address: {
+  sendAddress: {
+    type: DataTypes.STRING,
+  },
+  receiveAddress: {
     type: DataTypes.STRING,
     allowNull: false,
   },

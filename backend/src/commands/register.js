@@ -20,15 +20,15 @@ export default {
       defaults: { username },
     });
     user.set({
-      address: inputAddress,
+      receiveAddress: inputAddress,
     });
     await user.save();
     console.log(user.toJSON());
     console.log('user.discordId === id:', user.discordId === id);
     await interaction.reply({
       content: created
-        ? `✅ Register ${user.username} with \`${user.address}\``
-        : `✅ Update \`${user.username}\` with ${user.address}`,
+        ? `✅ Register ${user.username} with \`${user.receiveAddress}\``
+        : `✅ Update \`${user.username}\` with ${user.receiveAddress}`,
       ephemeral: true,
     });
   },

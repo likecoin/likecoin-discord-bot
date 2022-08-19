@@ -2,6 +2,8 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { URL, URLSearchParams } from 'url';
 import bcrypt from 'bcrypt';
 
+import { User } from '../db.js';
+
 const COMMAND_NAME = 'deposit';
 const COMMAND_OPTION_NAME = 'address';
 const saltRounds = 10;
@@ -17,7 +19,14 @@ export default {
   async execute(interaction) {
     const address = interaction.options.getString(COMMAND_OPTION_NAME);
     console.log(interaction);
-    const { id } = interaction.user;
+    const { id, username } = interaction.user;
+    const [user, created] = await User.findOrBuild({
+      where: { discordId: id },
+      defaults: { username },
+    });
+    user.sendAddress = address;
+    if (created) user.receiveAddress = address;
+    await user.save();
     console.log(id);
     const hash = await bcrypt.hash(String(id), saltRounds);
     console.log(await bcrypt.compare(String(id), hash));
