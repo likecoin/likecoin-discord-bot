@@ -1,7 +1,7 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
 import {
-  depub, translate, send, register, deposit,
+  depub, translate, send, register, deposit, balance,
 } from './commands/index.js';
 
 import {
@@ -15,6 +15,7 @@ export const commands = [
   deposit,
   send,
   register,
+  balance,
 ];
 
 export async function registerCommands(guild) {
