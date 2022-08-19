@@ -1,19 +1,20 @@
 <template>
   <main>
     <h1>Deposit</h1>
-    <p>{{ hash }}</p>
-    <p>{{ walletAddress }}</p>
-    <p>{{ address }} hi</p>
     <label>Deposit Amount: <input v-model="amount" type="number">{{ demon }}</label>
+    <p v-if="walletAddress !== address" class="error">
+      Wallet address doesn't match deposit address: {{ address }}
+    </p>
+    <br>
+    <button class="button" :disabled="walletAddress !== address" @click="createSendGrant">
+      Sign
+    </button>
     <p v-if="isSending">
       Sending...
     </p>
     <p v-if="error" class="error">
       {{ error }}
     </p>
-    <button class="button" @click="createSendGrant">
-      Sign
-    </button>
     <p v-if="txHash">
       <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a>
     </p>
