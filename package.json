@@ -1,34 +1,16 @@
 {
   "name": "likecoin-discord-bot",
   "version": "1.0.0",
-  "type": "module",
-  "main": "./src/index.js",
+  "repository": "git@github.com:lancatlin/likecoin-discord-bot.git",
+  "author": "Wancat <wancat@wancat.cc>",
   "license": "GPL-3.0",
   "private": true,
   "workspaces": [
-    "frontend"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "lint": "eslint --fix --ext .js .",
-    "start": "node src/index.js",
-    "delete": "node src/delete-commands.js",
-    "dev": "nodemon src/index.js"
-  },
-  "dependencies": {
-    "@discordjs/builders": "^1.1.0",
-    "@discordjs/rest": "^1.0.1",
-    "bcrypt": "^5.0.1",
-    "bech32": "^2.0.0",
-    "discord-api-types": "^0.37.1",
-    "discord.js": "^14.1.2",
-    "dotenv": "^16.0.1",
-    "sequelize": "^6.21.3",
-    "sqlite3": "^5.0.11"
-  },
-  "devDependencies": {
-    "eslint": "^8.14.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.19"
+    "start": "yarn --cwd backend start",
+    "dev": "yarn --cwd backend dev & yarn --cwd frontend dev"
   }
 }
