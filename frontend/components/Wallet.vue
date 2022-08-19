@@ -17,7 +17,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { WALLET_CONFIG } from '../config.js'
+import { WALLET_CONFIG } from '@likecoin-discord-bot/config'
 
 export default {
   name: 'Wallet',

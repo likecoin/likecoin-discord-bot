@@ -1,6 +1,6 @@
 import { LikeCoinWalletConnector, LikeCoinWalletConnectorMethodType } from '@likecoin/wallet-connector'
 import { ISCNSigningClient } from '@likecoin/iscn-js'
-import { WALLET_CONFIG, API_WALLET_ADDRESS, EXPIRATION } from '../config'
+import { WALLET_CONFIG, API_WALLET_ADDRESS, EXPIRATION } from '@likecoin-discord-bot/config'
 
 let connector = null
 

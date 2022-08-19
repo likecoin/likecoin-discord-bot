@@ -1,5 +1,7 @@
 import 'dotenv/config';
 
+export { INDEXER } from '@likecoin-discord-bot/config';
+
 export const {
   TOKEN,
   CLIENT_ID,
