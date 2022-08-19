@@ -1003,7 +1003,7 @@
   dependencies:
     bn.js "^5.2.0"
 
-"@cosmjs/proto-signing@0.28.13", "@cosmjs/proto-signing@^0.28.10":
+"@cosmjs/proto-signing@0.28.13", "@cosmjs/proto-signing@^0.28.10", "@cosmjs/proto-signing@^0.28.13":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/proto-signing/-/proto-signing-0.28.13.tgz#95ac12f0da0f0814f348f5ae996c3e96d015df61"
   integrity sha512-nSl/2ZLsUJYz3Ad0RY3ihZUgRHIow2OnYqKsESMu+3RA/jTi9bDYhiBu8mNMHI0xrEJry918B2CyI56pOUHdPQ==

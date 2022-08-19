@@ -8,6 +8,7 @@ export {
 export const {
   TOKEN,
   CLIENT_ID,
+  MNEMONIC,
 } = process.env;
 
 export const PREFIX_PAIRS = [

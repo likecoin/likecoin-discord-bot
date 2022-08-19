@@ -11,12 +11,16 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
+    "@cosmjs/proto-signing": "^0.28.13",
+    "@cosmjs/stargate": "^0.28.13",
     "@discordjs/builders": "^1.1.0",
     "@discordjs/rest": "^1.0.1",
     "@likecoin-discord-bot/config": "1.0.0",
+    "@likecoin/iscn-js": "^0.2.2",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "bech32": "^2.0.0",
+    "cosmjs-types": "^0.5.0",
     "discord-api-types": "^0.37.1",
     "discord.js": "^14.1.2",
     "dotenv": "^16.0.1",
