@@ -1,30 +1,30 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { WALLET_CONFIG } from '../config.js';
+import { ButtonBuilder, SlashCommandBuilder } from '@discordjs/builders';
+import { ActionRowBuilder } from 'discord.js';
+import { WALLET_CONFIG, ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
 import { getBalance } from '../utils/index.js';
 import { send } from '../utils/wallet.js';
 
 const COMMAND_NAME = 'send';
-const COMMAND_OPTION_NAME = 'receiver';
+const OPTION_RECEIVER = 'receiver';
+const OPTION_AMOUNT = 'amount';
 
 export default {
   data: new SlashCommandBuilder()
     .setName(COMMAND_NAME)
     .setDescription('Send LIKE to others')
-    .addStringOption((address) => address.setName(COMMAND_OPTION_NAME)
+    .addStringOption((address) => address.setName(OPTION_RECEIVER)
       .setDescription('Receiver address')
       .setRequired(true))
-    .addIntegerOption((amount) => amount.setName('amount')
+    .addIntegerOption((amount) => amount.setName(OPTION_AMOUNT)
       .setDescription('amount (LIKE)')
       .setRequired(true)),
 
   async execute(interaction) {
-    console.log(interaction);
     const { id: discordId } = interaction.user;
-    const receiverAddr = interaction.options.getString(COMMAND_OPTION_NAME);
-    const amount = interaction.options.getInteger('amount');
-    console.log(amount);
+    const receiverAddr = interaction.options.getString(OPTION_RECEIVER);
+    const amount = interaction.options.getInteger(OPTION_AMOUNT);
     const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
     await interaction.reply({
       content: `Sending ${amount} LIKE to ${receiverAddr}...`,
@@ -36,14 +36,22 @@ export default {
 
       const { amount: balanceAmount } = await getBalance(user);
 
-      console.log(balanceAmount, nanoAmount);
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
 
       const txHash = await send(user, receiverAddr, nanoAmount);
       console.log(txHash);
 
-      await interaction.editReply({
-        content: `${user.username} sent LIKE to ${receiverAddr}\ntx: ${txHash}`,
+      const row = new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+            .setLabel('Check Tx')
+            .setStyle('Link')
+            .setURL(`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`),
+        );
+
+      await interaction.followUp({
+        content: `<@${discordId}> sent ${amount} LIKE to ${receiverAddr}\ntx: ${txHash}`,
+        components: [row],
         ephemeral: false,
       });
     } catch (err) {
