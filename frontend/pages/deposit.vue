@@ -1,7 +1,9 @@
 <template>
   <main>
     <h1>Deposit</h1>
-    <label>Deposit Amount: <input v-model="amount" type="number">{{ demon }}</label>
+    <p>Authorized LikeCoin Discord Bot to send LIKE from your wallet</p>
+    <p>The money will keep in your wallet until you /send it</p>
+    <label>Authorized amount: <input v-model="amount" type="number">{{ demon }}</label>
     <p v-if="walletAddress !== address" class="error">
       Wallet address doesn't match deposit address: {{ address }}
     </p>
@@ -15,9 +17,10 @@
     <p v-if="error" class="error">
       {{ error }}
     </p>
-    <p v-if="txHash">
-      <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a>
-    </p>
+    <div v-if="txHash">
+      <p>Authorized success! Now use /balance to check your deposit and /send to send the LIKE to others!</p>
+      <p>Tx: <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a></p>
+    </div>
   </main>
 </template>
 

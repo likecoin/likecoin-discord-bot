@@ -43,7 +43,6 @@ async function verifyUser(user) {
       order_by: 'desc',
     },
   });
-  console.log(res);
   if (res.data.txs.length === 0) { throw new Error('No tx'); }
   const { memo } = res.data.txs[0].body;
   if (!(await verifyMemo(user, memo))) { throw new Error('User not verifyed'); }
