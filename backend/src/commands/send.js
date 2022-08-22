@@ -33,10 +33,10 @@ export default {
     });
     try {
       const user = await User.findOne({ where: { discordId } });
-      if (!user) { throw new Error('User not found, please deposit first.'); }
+      if (!user) { throw new Error('Please deposit first.'); }
 
       const receiver = await User.findOne({ where: { discordId: receiverUser.id } });
-      if (!receiver) { throw new Error('Receiver not found, please /register first.'); }
+      if (!receiver) { throw new Error(`${receiverUser} doesn't have receiving address, they need to \`/register\` first.`); }
       const { amount: balanceAmount } = await getBalance(user);
 
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }

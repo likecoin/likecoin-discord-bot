@@ -1,7 +1,8 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { ButtonBuilder, SlashCommandBuilder } from '@discordjs/builders';
 import { URL, URLSearchParams } from 'url';
 import bcrypt from 'bcrypt';
 
+import { ActionRowBuilder } from 'discord.js';
 import { User } from '../db.js';
 
 const COMMAND_NAME = 'deposit';
@@ -35,8 +36,17 @@ export default {
       hash,
       address,
     });
+
+    const row = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+          .setLabel('Sign')
+          .setStyle('Link')
+          .setURL(depositURL.toString()),
+      );
     await interaction.reply({
-      content: depositURL.toString(),
+      content: 'Please sign the tx in the browser to finish deposit',
+      components: [row],
       ephemeral: true,
     });
   },
