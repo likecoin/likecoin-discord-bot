@@ -42,14 +42,14 @@ export default {
       const txHash = await send(user, receiverAddr, nanoAmount);
       console.log(txHash);
 
-      await interaction.reply({
-        content: `Sent LIKE to ${receiverAddr}\ntx: ${txHash}`,
-        ephemeral: true,
+      await interaction.editReply({
+        content: `${user.username} sent LIKE to ${receiverAddr}\ntx: ${txHash}`,
+        ephemeral: false,
       });
     } catch (err) {
       console.error(err);
-      await interaction.reply({
-        content: `Error: ${err}`,
+      await interaction.editReply({
+        content: `${err}`,
         ephemeral: true,
       });
     }
