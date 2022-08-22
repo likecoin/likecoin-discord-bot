@@ -22,9 +22,11 @@ export async function registerCommands(guild) {
   const rest = new REST({ version: '10' }).setToken(TOKEN);
 
   try {
+    console.log(commands);
+    const commandsMap = commands.map((command) => command.data.toJSON());
     await rest.put(
       Routes.applicationGuildCommands(CLIENT_ID, guild.id),
-      { body: commands.map((command) => command.data.toJSON()) },
+      { body: commandsMap },
     );
     console.log(`Successfully registered commands to ${guild.name}.`);
   } catch (err) {
