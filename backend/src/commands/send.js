@@ -3,44 +3,72 @@ import { ActionRowBuilder } from 'discord.js';
 import { WALLET_CONFIG, ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
-import { getBalance } from '../utils/index.js';
+import { getBalance, validateAddress } from '../utils/index.js';
 import { send } from '../utils/wallet.js';
 
 const COMMAND_NAME = 'send';
 const OPTION_RECEIVER = 'receiver';
+const OPTION_ADDRESS = 'address';
 const OPTION_AMOUNT = 'amount';
 
 export default {
   data: new SlashCommandBuilder()
     .setName(COMMAND_NAME)
     .setDescription('Send LIKE to others')
-    .addUserOption((user) => user.setName(OPTION_RECEIVER)
-      .setDescription('Receiver')
-      .setRequired(true))
-    .addIntegerOption((amount) => amount.setName(OPTION_AMOUNT)
-      .setDescription('amount (LIKE)')
-      .setRequired(true)),
+    .addSubcommand((sendUser) => sendUser
+      .setName('user')
+      .setDescription('sent LIKE to user who registered address')
+      .addUserOption((user) => user.setName(OPTION_RECEIVER)
+        .setDescription('Receiver')
+        .setRequired(true))
+      .addIntegerOption((amount) => amount.setName(OPTION_AMOUNT)
+        .setDescription('amount (LIKE)')
+        .setRequired(true)))
+    .addSubcommand((sendAddr) => sendAddr
+      .setName('address')
+      .setDescription('send LIKE to address directly')
+      .addStringOption((address) => address.setName(OPTION_ADDRESS)
+        .setDescription('Address')
+        .setRequired(true))
+      .addIntegerOption((amount) => amount.setName(OPTION_AMOUNT)
+        .setDescription('amount (LIKE)')
+        .setRequired(true))),
 
   async execute(interaction) {
     const { id: discordId } = interaction.user;
+    let receiveAddr = interaction.options.getString(OPTION_ADDRESS);
     const receiverUser = interaction.options.getUser(OPTION_RECEIVER);
     const amount = interaction.options.getInteger(OPTION_AMOUNT);
     const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
-    await interaction.reply({
-      content: `Sending ${amount} LIKE to ${receiverUser}...`,
+    await interaction.deferReply({
       ephemeral: true,
     });
     try {
       const user = await User.findOne({ where: { discordId } });
       if (!user) { throw new Error('Please deposit first.'); }
 
-      const receiver = await User.findOne({ where: { discordId: receiverUser.id } });
-      if (!receiver) { throw new Error(`${receiverUser} doesn't have receiving address, they need to \`/register\` first.`); }
+      if (interaction.options.getSubcommand() === 'user') {
+        const receiver = await User.findOne(
+          { where: { discordId: receiverUser.id } },
+        );
+        if (!receiver) {
+          throw new Error(
+            `${receiverUser} doesn't have receiving address, they need to \`/register\` first.`,
+          );
+        }
+        receiveAddr = receiver.receiveAddress;
+      }
+      if (!validateAddress(receiveAddr)) { throw new Error(`Invalid address: \`${receiveAddr}\``); }
+      await interaction.editReply({
+        content: `Sending ${amount} LIKE to ${receiverUser || receiveAddr}...`,
+        ephemeral: true,
+      });
+
       const { amount: balanceAmount } = await getBalance(user);
 
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
 
-      const txHash = await send(user, receiver, nanoAmount);
+      const txHash = await send(user, receiveAddr, nanoAmount);
 
       const row = new ActionRowBuilder()
         .addComponents(
@@ -51,7 +79,7 @@ export default {
         );
 
       await interaction.followUp({
-        content: `<@${discordId}> sent ${amount} LIKE to ${receiverUser}\ntx: ${txHash}`,
+        content: `<@${discordId}> sent ${amount} LIKE to ${receiverUser || receiveAddr}\ntx: ${txHash}`,
         components: [row],
         ephemeral: false,
       });

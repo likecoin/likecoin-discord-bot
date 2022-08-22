@@ -77,3 +77,9 @@ export async function getBalance(user) {
     throw err;
   }
 }
+
+export function validateAddress(addr) {
+  if (addr.startsWith('cosmos1')) { return addr.length === 45; }
+  if (addr.startsWith('like1')) { return addr.length === 43; }
+  return false;
+}

@@ -1,4 +1,4 @@
-import { ButtonBuilder, ContextMenuCommandBuilder, SlashCommandBuilder } from '@discordjs/builders';
+import { ButtonBuilder, ContextMenuCommandBuilder } from '@discordjs/builders';
 import { ActionRowBuilder, ApplicationCommandType } from 'discord.js';
 import { WALLET_CONFIG, ENDPOINT } from '../config.js';
 
@@ -7,6 +7,7 @@ import { getBalance } from '../utils/index.js';
 import { send } from '../utils/wallet.js';
 
 const COMMAND_NAME = 'LIKE this message';
+const amount = 5;
 
 export default {
   data: new ContextMenuCommandBuilder()
@@ -16,9 +17,7 @@ export default {
   async execute(interaction) {
     const { id: discordId } = interaction.user;
     const msg = await interaction.channel.messages.fetch(interaction.targetId);
-    console.log(msg);
     const { author: receiverUser, channel } = msg;
-    const amount = 5;
     const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
     await interaction.deferReply({
       content: `Sending ${amount} LIKE to ${receiverUser}...`,
@@ -35,7 +34,7 @@ export default {
 
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
 
-      const txHash = await send(user, receiver, nanoAmount);
+      const txHash = await send(user, receiver.receiveAddress, nanoAmount);
 
       const row = new ActionRowBuilder()
         .addComponents(
