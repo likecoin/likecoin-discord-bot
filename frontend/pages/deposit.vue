@@ -26,7 +26,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { WALLET_CONFIG, ENDPOINT } from '@likecoin-discord-bot/config'
+import { WALLET_CONFIG, ENDPOINT } from '@/config'
 
 export default {
   name: 'Deposit',

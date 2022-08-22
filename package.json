@@ -13,6 +13,7 @@
   "scripts": {
     "start": "yarn --cwd backend start",
     "dev": "NODE_ENV=development yarn --cwd backend dev & yarn --cwd frontend dev",
-    "lint": "yarn --cwd backend lint & yarn --cwd frontend lint"
+    "lint": "yarn --cwd backend lint & yarn --cwd frontend lint",
+    "generate": "yarn --cwd frontend generate"
   }
 }

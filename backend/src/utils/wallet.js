@@ -5,7 +5,6 @@ import {
 } from '../config.js';
 
 async function getSigningClient() {
-  // Use mnemonic
   const signer = await DirectSecp256k1HdWallet.fromMnemonic(MNEMONIC, {
     prefix: 'like',
   });

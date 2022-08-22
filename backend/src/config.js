@@ -1,8 +1,12 @@
 import 'dotenv/config';
 
 export {
-  ENDPOINT, API_WALLET_ADDRESS, WIDGET_ENDPOINT, NODE_ENV,
+  NODE_ENV,
+  ENDPOINT,
+  API_WALLET_ADDRESS,
+  WIDGET_ENDPOINT,
   WALLET_CONFIG,
+  UI_URL,
 } from '@likecoin-discord-bot/config';
 
 export const {

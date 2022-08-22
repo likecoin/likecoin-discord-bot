@@ -1,8 +1,11 @@
 export const { NODE_ENV } = process.env
 export const IPFS_GATEWAY = 'https://cloudflare-ipfs.com'
 export const ARWEAVE_GATEWAY = 'https://arweave.net'
-export const API_WALLET_ADDRESS = 'like1sdz7wpzdazxekr6f4sx33rtc7nra6lu9nxe7yh'
+export const API_WALLET_ADDRESS = process.env.API_WALLET_ADDRESS || 'like1sdz7wpzdazxekr6f4sx33rtc7nra6lu9nxe7yh'
 export const EXPIRATION = 30 // 30 days
+export const UI_BASE_PATH = '/likecoin-discord-bot';
+const UI_BASE = process.env.UI_BASE || 'http://localhost:3000'
+export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
 export const ENDPOINT = NODE_ENV === 'development'
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'

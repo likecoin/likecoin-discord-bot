@@ -4,11 +4,11 @@ import bcrypt from 'bcrypt';
 
 import { ActionRowBuilder } from 'discord.js';
 import { User } from '../db.js';
+import { UI_URL } from '../config.js';
 
 const COMMAND_NAME = 'deposit';
 const COMMAND_OPTION_NAME = 'address';
 const saltRounds = 10;
-const UI_URL = 'http://localhost:3000';
 
 export default {
   data: new SlashCommandBuilder()
@@ -28,7 +28,7 @@ export default {
     if (created) user.receiveAddress = address;
     await user.save();
     const hash = await bcrypt.hash(String(id), saltRounds);
-    const depositURL = new URL('/deposit', UI_URL);
+    const depositURL = new URL(`${UI_URL}/deposit`);
     depositURL.search = new URLSearchParams({
       hash,
       address,

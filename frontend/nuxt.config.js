@@ -1,3 +1,4 @@
+import { UI_BASE_PATH } from './config.js'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -20,6 +21,10 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
+  },
+
+  router: {
+    base: UI_BASE_PATH,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

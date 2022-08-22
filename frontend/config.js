@@ -1,2 +1,1 @@
-export * from 'likecoin-discord-bot/config'
-export const ENDPOINT = ''
+export * from '@likecoin-discord-bot/config'
