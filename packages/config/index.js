@@ -6,15 +6,16 @@ export const EXPIRATION = 30 // 30 days
 export const UI_BASE_PATH = '/likecoin-discord-bot';
 const UI_BASE = process.env.UI_BASE || 'http://localhost:3000'
 export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
-export const ENDPOINT = NODE_ENV === 'development'
+export const isDev = true // NODE_ENV === 'development'
+export const ENDPOINT = isDev
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
 
-export const WIDGET_ENDPOINT = NODE_ENV === 'development'
+export const WIDGET_ENDPOINT = isDev
   ? 'https://testnet.like.co'
   : 'https://like.co'
 
-export const WALLET_CONFIG = NODE_ENV === 'development'
+export const WALLET_CONFIG = isDev
   ? {
       chainId: 'likecoin-public-testnet-5',
       chainName: 'LikeCoin',
