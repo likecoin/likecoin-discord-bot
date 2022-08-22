@@ -14,8 +14,8 @@ export default {
   data: new SlashCommandBuilder()
     .setName(COMMAND_NAME)
     .setDescription('Send LIKE to others')
-    .addStringOption((address) => address.setName(OPTION_RECEIVER)
-      .setDescription('Receiver address')
+    .addUserOption((user) => user.setName(OPTION_RECEIVER)
+      .setDescription('Receiver')
       .setRequired(true))
     .addIntegerOption((amount) => amount.setName(OPTION_AMOUNT)
       .setDescription('amount (LIKE)')
@@ -23,22 +23,25 @@ export default {
 
   async execute(interaction) {
     const { id: discordId } = interaction.user;
-    const receiverAddr = interaction.options.getString(OPTION_RECEIVER);
+    const receiverUser = interaction.options.getUser(OPTION_RECEIVER);
+    console.log(receiverUser);
     const amount = interaction.options.getInteger(OPTION_AMOUNT);
     const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
     await interaction.reply({
-      content: `Sending ${amount} LIKE to ${receiverAddr}...`,
+      content: `Sending ${amount} LIKE to ${receiverUser}...`,
       ephemeral: true,
     });
     try {
       const user = await User.findOne({ where: { discordId } });
       if (!user) { throw new Error('User not found, please deposit first.'); }
 
+      const receiver = await User.findOne({ where: { discordId: receiverUser.id } });
+      if (!receiver) { throw new Error('Receiver not found, please /register first.'); }
       const { amount: balanceAmount } = await getBalance(user);
 
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
 
-      const txHash = await send(user, receiverAddr, nanoAmount);
+      const txHash = await send(user, receiver, nanoAmount);
       console.log(txHash);
 
       const row = new ActionRowBuilder()
@@ -50,7 +53,7 @@ export default {
         );
 
       await interaction.followUp({
-        content: `<@${discordId}> sent ${amount} LIKE to ${receiverAddr}\ntx: ${txHash}`,
+        content: `<@${discordId}> sent ${amount} LIKE to ${receiverUser}\ntx: ${txHash}`,
         components: [row],
         ephemeral: false,
       });

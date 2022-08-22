@@ -21,12 +21,12 @@ async function getSigningClient() {
   return signingClient;
 }
 
-export async function send(user, receiverAddr, amount) {
+export async function send(user, receiver, amount) {
   const client = await getSigningClient();
   const res = await client.executeSendGrant(
     API_WALLET_ADDRESS,
     user.sendAddress,
-    receiverAddr,
+    receiver.receiveAddress,
     [{
       denom: WALLET_CONFIG.coinMinimalDenom,
       amount: String(amount),
