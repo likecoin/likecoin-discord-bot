@@ -3,7 +3,6 @@ import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
 import {
   ENDPOINT, MNEMONIC, API_WALLET_ADDRESS, WALLET_CONFIG,
 } from '../config.js';
-import { changeAddressPrefix } from './index.js';
 
 async function getSigningClient() {
   // Use mnemonic
@@ -11,7 +10,6 @@ async function getSigningClient() {
     prefix: 'like',
   });
   const [{ address }] = await signer.getAccounts();
-  console.log(address);
   if (API_WALLET_ADDRESS !== address) {
     throw new Error(`API wallet address not match: expect ${API_WALLET_ADDRESS} got ${address}`);
   }
@@ -32,6 +30,5 @@ export async function send(user, receiver, amount) {
       amount: String(amount),
     }],
   );
-  console.log(res);
   return res.transactionHash;
 }

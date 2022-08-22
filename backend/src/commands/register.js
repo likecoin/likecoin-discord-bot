@@ -13,7 +13,6 @@ export default {
       .setRequired(true)),
   async execute(interaction) {
     const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);
-    console.log(interaction);
     const { id, username } = interaction.user;
     const [user, created] = await User.findOrBuild({
       where: { discordId: id },
@@ -23,8 +22,6 @@ export default {
       receiveAddress: inputAddress,
     });
     await user.save();
-    console.log(user.toJSON());
-    console.log('user.discordId === id:', user.discordId === id);
     await interaction.reply({
       content: created
         ? `✅ Register ${user.username} with \`${user.receiveAddress}\``

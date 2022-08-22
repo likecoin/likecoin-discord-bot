@@ -19,7 +19,6 @@ export default {
       .setRequired(true)),
   async execute(interaction) {
     const address = interaction.options.getString(COMMAND_OPTION_NAME);
-    console.log(interaction);
     const { id, username } = interaction.user;
     const [user, created] = await User.findOrBuild({
       where: { discordId: id },
@@ -28,9 +27,7 @@ export default {
     user.sendAddress = address;
     if (created) user.receiveAddress = address;
     await user.save();
-    console.log(id);
     const hash = await bcrypt.hash(String(id), saltRounds);
-    console.log(await bcrypt.compare(String(id), hash));
     const depositURL = new URL('/deposit', UI_URL);
     depositURL.search = new URLSearchParams({
       hash,

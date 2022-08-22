@@ -24,7 +24,6 @@ export default {
   async execute(interaction) {
     const { id: discordId } = interaction.user;
     const receiverUser = interaction.options.getUser(OPTION_RECEIVER);
-    console.log(receiverUser);
     const amount = interaction.options.getInteger(OPTION_AMOUNT);
     const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
     await interaction.reply({
@@ -42,7 +41,6 @@ export default {
       if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
 
       const txHash = await send(user, receiver, nanoAmount);
-      console.log(txHash);
 
       const row = new ActionRowBuilder()
         .addComponents(
