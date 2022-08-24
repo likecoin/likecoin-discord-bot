@@ -1,6 +1,7 @@
 // Require the necessary discord.js classes
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import { TOKEN } from './config.js';
+import { TOKEN, BACKEND_PORT } from './config.js';
+import router from './router.js';
 import { registerCommands, commands } from './register-commands.js';
 import { initDB } from './db.js';
 
@@ -44,3 +45,4 @@ client.on('guildCreate', async (guild) => {
 
 initDB();
 client.login(TOKEN);
+router.listen(BACKEND_PORT);

@@ -1,4 +1,4 @@
-import { UI_BASE_PATH } from './config.js'
+import { UI_BASE_PATH, BACKEND_URL } from './config.js'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -50,8 +50,12 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
   ],
 
+  proxy: [
+    `${BACKEND_URL}/api`,
+  ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
