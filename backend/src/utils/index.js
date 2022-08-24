@@ -27,11 +27,11 @@ export function changeAddressPrefix(address) {
   return bech32.encode(newPrefix, words);
 }
 
-function verifyMemo(user, memo) {
-  return bcrypt.compare(String(user.discordId), memo);
+export function verifyMemo(discordId, memo) {
+  return bcrypt.compare(String(discordId), memo);
 }
 
-async function verifyUser(user) {
+export async function verifyUser(user) {
   const res = await api.get('/cosmos/tx/v1beta1/txs', {
     params: {
       events: [
@@ -45,7 +45,7 @@ async function verifyUser(user) {
   });
   if (res.data.txs.length === 0) { throw new Error('No tx'); }
   const { memo } = res.data.txs[0].body;
-  if (!(await verifyMemo(user, memo))) { throw new Error('User not verifyed'); }
+  if (!(await verifyMemo(user.discordId, memo))) { throw new Error('User not verified'); }
 }
 
 async function queryBalance(user) {

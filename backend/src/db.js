@@ -23,13 +23,26 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  balance: {
-    type: DataTypes.BIGINT.UNSIGNED,
-    defaultValue: 0,
-  },
 }, {
   sequelize,
   modelName: 'User',
+});
+
+export class Session extends Model {}
+
+Session.init({
+  token: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  discordId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  sequelize,
+  modelName: 'Session',
 });
 
 export async function initDB() {
