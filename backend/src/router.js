@@ -8,6 +8,7 @@ const app = express();
 app.use(express.urlencoded({
   extended: true,
 }));
+app.use(express.json());
 
 app.post('/api/deposit', async (req, res, next) => {
   console.log(req.body);

@@ -4,11 +4,8 @@
     <p>Authorized LikeCoin Discord Bot to send LIKE from your wallet</p>
     <p>The money will keep in your wallet until you /send it</p>
     <label>Authorized amount: <input v-model="amount" type="number">{{ demon }}</label>
-    <p v-if="walletAddress !== address" class="error">
-      Wallet address doesn't match deposit address: {{ address }}
-    </p>
     <br>
-    <button class="button" :disabled="walletAddress !== address" @click="createSendGrant">
+    <button class="button" @click="createSendGrant">
       Sign
     </button>
     <p v-if="isSending">
@@ -32,7 +29,7 @@ export default {
   name: 'Deposit',
   data: () => ({
     hash: '',
-    address: '',
+    token: '',
     amount: 100,
     demon: WALLET_CONFIG.coinDenom,
     ENDPOINT,
@@ -46,13 +43,22 @@ export default {
     }),
   },
   mounted () {
-    const { hash, address } = this.$route.query
+    const { hash, token } = this.$route.query
     this.hash = hash
-    this.address = address
+    this.token = token
   },
   methods: {
-    createSendGrant () {
-      this.$store.dispatch('wallet/createSendGrant', { amount: this.amount, memo: this.hash })
+    async createSendGrant () {
+      await this.$store.dispatch('wallet/createSendGrant', { amount: this.amount, memo: this.hash })
+      try {
+        const res = await this.$axios.post('/api/deposit', {
+          token: this.token,
+          txHash: this.txHash,
+        })
+        console.log(res)
+      } catch (err) {
+        this.error = err
+      }
     },
   },
 }
