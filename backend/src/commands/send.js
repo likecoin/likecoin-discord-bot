@@ -34,7 +34,7 @@ export default {
         .setRequired(true))),
 
   async execute(interaction) {
-    const { id: discordId } = interaction.user;
+    const { user: { id: discordId }, channel } = interaction;
     let receiveAddr = interaction.options.getString(OPTION_ADDRESS);
     const receiverUser = interaction.options.getUser(OPTION_RECEIVER);
     const amount = interaction.options.getInteger(OPTION_AMOUNT);
@@ -51,9 +51,12 @@ export default {
           { where: { discordId: receiverUser.id } },
         );
         if (!receiver) {
-          throw new Error(
-            `${receiverUser} doesn't have receiving address, they need to \`/register\` first.`,
-          );
+          await channel.send({
+            content: `<@${discordId}> want to send LIKE to ${receiverUser} but they doesn't have receiving address, need to \`/register\` first.`,
+            ephemeral: false,
+          });
+          await interaction.editReply('Canceled');
+          return;
         }
         receiveAddr = receiver.receiveAddress;
       }
@@ -77,10 +80,12 @@ export default {
             .setURL(`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`),
         );
 
-      await interaction.followUp({
-        content: `<@${discordId}> sent ${amount} LIKE to ${receiverUser || receiveAddr}\ntx: ${txHash}`,
+      await interaction.editReply({
+        content: `Done\ntx: ${txHash}`,
         components: [row],
-        ephemeral: false,
+      });
+      await channel.send({
+        content: `<@${discordId}> sent ${amount} LIKE to ${receiverUser || receiveAddr}`,
       });
     } catch (err) {
       console.error(err);
