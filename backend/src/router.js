@@ -42,7 +42,7 @@ app.post('/api/deposit', async (req, res, next) => {
     res.json({ msg: 'success' });
     client.users.cache.get(user.discordId).send({
       content: `Deposit ${formatCoin(amount)} from ${user.sendAddress}. ${created
-        ? '\nSet receiving address to deposit address by default.\nUse \\register to change.'
+        ? '\nReceiving address is set to deposit address by default.\nUse \\register to change.'
         : ''}`,
       ephemeral: false,
     })

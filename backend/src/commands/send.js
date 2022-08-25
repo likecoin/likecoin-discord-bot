@@ -3,7 +3,9 @@ import { ActionRowBuilder } from 'discord.js';
 import { WALLET_CONFIG, ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
-import { getBalance, validateAddress, send } from '../utils/index.js';
+import {
+  getBalance, validateAddress, send, newDeposit,
+} from '../utils/index.js';
 
 const COMMAND_NAME = 'send';
 const OPTION_RECEIVER = 'receiver';
@@ -44,7 +46,12 @@ export default {
     });
     try {
       const user = await User.findOne({ where: { discordId } });
-      if (!user) { throw new Error('Please deposit first.'); }
+      if (!user) {
+        const res = await newDeposit(discordId);
+        res.content = 'You haven\'t deposited. Please deposit and try again';
+        await interaction.editReply(res);
+        return;
+      }
 
       if (interaction.options.getSubcommand() === 'user') {
         const receiver = await User.findOne(
