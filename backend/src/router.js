@@ -10,6 +10,12 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 
+app.get('/api/token', async (req, res) => {
+  const { token } = req.query;
+  const session = await Session.findOne({ where: { token } });
+  res.json({ valid: !!session });
+});
+
 app.post('/api/deposit', async (req, res, next) => {
   console.log(req.body);
   const { txHash, token } = req.body;
@@ -36,9 +42,9 @@ app.post('/api/deposit', async (req, res, next) => {
   }
 });
 
-app.use((err, _, res) => {
+app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(400).json({ error: err.toString() });
+  res.status(400).send(err.toString());
 });
 
 export default app;
