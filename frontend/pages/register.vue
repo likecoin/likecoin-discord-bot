@@ -1,7 +1,13 @@
 <template>
   <div>
     <h1>Register receiving address</h1>
-    <div v-if="valid">
+    <p v-if="$fetchState.pending">
+      Loading...
+    </p>
+    <p v-else-if="$fetchState.error" class="error">
+      An error occurs...
+    </p>
+    <div v-else-if="valid">
       <p>Register <code>{{ walletAddress }}</code> as your receiving address</p>
       <button v-if="walletAddress && !isDone" class="button" @click="register">
         Register

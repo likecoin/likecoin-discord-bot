@@ -3,8 +3,7 @@ import { ActionRowBuilder } from 'discord.js';
 import { WALLET_CONFIG, ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
-import { getBalance, validateAddress } from '../utils/index.js';
-import { send } from '../utils/wallet.js';
+import { getBalance, validateAddress, send } from '../utils/index.js';
 
 const COMMAND_NAME = 'send';
 const OPTION_RECEIVER = 'receiver';

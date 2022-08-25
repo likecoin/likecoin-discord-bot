@@ -1,6 +1,5 @@
 import { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder } from '@discordjs/builders';
-import { User } from '../db.js';
-import { newSession } from '../utils/index.js';
+import { newSession, registerAddress } from '../utils/index.js';
 import { UI_URL } from '../config.js';
 
 const COMMAND_NAME = 'register';
@@ -13,7 +12,7 @@ export default {
     .addStringOption((address) => address.setName(COMMAND_OPTION_NAME)
       .setDescription('Cosmos address (cosmos1...) or Like address (like1...)')),
   async execute(interaction) {
-    const { id, username } = interaction.user;
+    const { id } = interaction.user;
     const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);
     if (!inputAddress) {
       const { token } = await newSession(id);
@@ -22,29 +21,20 @@ export default {
       const row = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
-            .setLabel('Sign')
+            .setLabel('Open')
             .setStyle('Link')
             .setURL(url.toString()),
         );
       await interaction.reply({
-        content: 'Please sign the tx in the browser to finish deposit',
+        content: 'Please link your wallet in the browser to finish register',
         components: [row],
         ephemeral: true,
       });
       return;
     }
-    const [user, created] = await User.findOrBuild({
-      where: { discordId: id },
-      defaults: { username },
-    });
-    user.set({
-      receiveAddress: inputAddress,
-    });
-    await user.save();
+    const user = await registerAddress(id, inputAddress);
     await interaction.reply({
-      content: created
-        ? `✅ Register ${user.username} with \`${user.receiveAddress}\``
-        : `✅ Update \`${user.username}\` with ${user.receiveAddress}`,
+      content: `✅ Register ${user.username} with \`${user.receiveAddress}\``,
       ephemeral: true,
     });
   },

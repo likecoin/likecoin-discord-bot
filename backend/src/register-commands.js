@@ -19,16 +19,16 @@ export const commands = [
   likeMessage,
 ];
 
-export async function registerCommands(guild) {
+export async function registerCommands() {
   const rest = new REST({ version: '10' }).setToken(TOKEN);
 
   try {
     const commandsMap = commands.map((command) => command.data.toJSON());
     await rest.put(
-      Routes.applicationGuildCommands(CLIENT_ID, guild.id),
+      Routes.applicationCommands(CLIENT_ID),
       { body: commandsMap },
     );
-    console.log(`Successfully registered commands to ${guild.name}.`);
+    console.log('Successfully registered commands.');
   } catch (err) {
     console.error(err);
   }

@@ -6,9 +6,13 @@ import { v4 } from 'uuid';
 
 import {
   PREFIX_PAIRS, API_WALLET_ADDRESS, ENDPOINT,
+  WALLET_CONFIG,
 } from '../config.js';
 
 import { Session } from '../db.js';
+
+export { send } from './wallet.js';
+export { registerAddress } from './register.js';
 
 const prefixMap = new Map();
 PREFIX_PAIRS.forEach(([first, second]) => {
@@ -23,11 +27,17 @@ export const api = axios.create({
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
 
-export function newSession(id) {
+export async function newSession(discordId) {
+  await Session.destroy({ where: { discordId } });
   return Session.create({
     token: v4(),
-    discordId: id,
+    discordId,
   });
+}
+
+export function formatCoin(nanoAmount) {
+  const amount = Number(nanoAmount) / (10 ** WALLET_CONFIG.coinDecimals);
+  return `${amount} ${WALLET_CONFIG.coinDenom}`;
 }
 
 export function changeAddressPrefix(address) {

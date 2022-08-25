@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { getBalance } from '../utils/index.js';
+import { getBalance, formatCoin } from '../utils/index.js';
 import { WALLET_CONFIG } from '../config.js';
 import { User } from '../db.js';
 
@@ -17,10 +17,9 @@ export default {
       if (!user) { throw new Error('User not found'); }
       const { expiration, denom, amount: nanoAmount } = await getBalance(user);
       if (denom !== WALLET_CONFIG.coinMinimalDenom) { throw new Error(`Wrong denom: ${denom}`); }
-      const amount = Number(nanoAmount) / (10 ** WALLET_CONFIG.coinDecimals);
       await interaction.reply({
         content: `sending address: \`${user.sendAddress}\`
-deposit amount: ${amount} ${WALLET_CONFIG.coinDenom}
+deposit amount: ${formatCoin(nanoAmount)}
 expiration: ${expiration}
 receiving address: \`${user.receiveAddress}\`
 `,

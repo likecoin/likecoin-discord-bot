@@ -1,7 +1,13 @@
 <template>
   <main>
     <h1>Deposit</h1>
-    <div v-if="valid">
+    <p v-if="$fetchState.pending">
+      Loading...
+    </p>
+    <p v-else-if="$fetchState.error" class="error">
+      An error occurs...
+    </p>
+    <div v-else-if="valid">
       <p>Authorized LikeCoin Discord Bot to send LIKE from your wallet</p>
       <p>The money will keep in your wallet until you /send it</p>
       <label>Authorized amount: <input v-model="amount" type="number">{{ demon }}</label>
@@ -48,12 +54,8 @@ export default {
     const { hash, token } = this.$route.query
     this.hash = hash
     this.token = token
-    try {
-      const res = await this.$axios.get('/api/token', { params: { token: this.token } })
-      this.valid = res.data.valid
-    } catch (err) {
-      this.valid = false
-    }
+    const res = await this.$axios.get('/api/token', { params: { token: this.token } })
+    this.valid = res.data.valid
   },
   computed: {
     ...mapState('wallet', {
