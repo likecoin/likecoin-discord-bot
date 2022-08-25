@@ -44,15 +44,7 @@ export default {
     errorMsg: '',
     ENDPOINT,
   }),
-  computed: {
-    ...mapState('wallet', {
-      walletAddress: state => state.walletAddress,
-      isSending: state => state.isSending,
-      error: state => state.error,
-      txHash: state => state.txHash,
-    }),
-  },
-  async mounted () {
+  async fetch () {
     const { hash, token } = this.$route.query
     this.hash = hash
     this.token = token
@@ -62,6 +54,14 @@ export default {
     } catch (err) {
       this.valid = false
     }
+  },
+  computed: {
+    ...mapState('wallet', {
+      walletAddress: state => state.walletAddress,
+      isSending: state => state.isSending,
+      error: state => state.error,
+      txHash: state => state.txHash,
+    }),
   },
   methods: {
     async createSendGrant () {

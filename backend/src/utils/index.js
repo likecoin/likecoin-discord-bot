@@ -2,10 +2,13 @@ import { bech32 } from 'bech32';
 import axios from 'axios';
 import qs from 'qs';
 import bcrypt from 'bcrypt';
+import { v4 } from 'uuid';
 
 import {
   PREFIX_PAIRS, API_WALLET_ADDRESS, ENDPOINT,
 } from '../config.js';
+
+import { Session } from '../db.js';
 
 const prefixMap = new Map();
 PREFIX_PAIRS.forEach(([first, second]) => {
@@ -19,6 +22,13 @@ export const api = axios.create({
   baseURL: ENDPOINT,
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
+
+export function newSession(id) {
+  return Session.create({
+    token: v4(),
+    discordId: id,
+  });
+}
 
 export function changeAddressPrefix(address) {
   const { prefix, words } = bech32.decode(address);

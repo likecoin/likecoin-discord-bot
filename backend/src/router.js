@@ -42,6 +42,23 @@ app.post('/api/deposit', async (req, res, next) => {
   }
 });
 
+app.post('/api/register', async (req, res, next) => {
+  const { token, address } = req.body;
+  try {
+    const session = await Session.findOne({ where: { token } });
+    if (!session) { throw new Error('SESSION_NOT_FOUND'); }
+    const [user] = await User.findOrBuild({
+      where: { discordId: session.discordId },
+    });
+    user.receiveAddress = address;
+    await user.save();
+    await session.destroy();
+    res.json({ msg: 'success' });
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(400).send(err.toString());
