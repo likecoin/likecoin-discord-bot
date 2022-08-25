@@ -25,7 +25,6 @@ app.post('/api/deposit', async (req, res, next) => {
     const session = await Session.findOne({ where: { token } });
     if (!session) { throw new Error('SESSION_NOT_FOUND'); }
     const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
-    console.log(data);
     const { messages: [{ granter }] } = data.tx.body;
     const [user, created] = await User.findOrBuild({
       where: { discordId: session.discordId },
@@ -34,7 +33,6 @@ app.post('/api/deposit', async (req, res, next) => {
       },
     });
     user.sendAddress = granter;
-    console.log(user.toJSON());
     await verifyUser(user);
     const { amount } = await getBalance(user);
     await user.save();
