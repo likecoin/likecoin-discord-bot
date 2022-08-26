@@ -1,8 +1,8 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
+import { DB_NAME, DB_USER, DB_PASS } from './config.js';
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './data/db.sqlite',
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+  dialect: 'postgres',
 });
 
 export class User extends Model {}

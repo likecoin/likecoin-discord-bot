@@ -14,6 +14,9 @@ export const {
   TOKEN,
   CLIENT_ID,
   MNEMONIC,
+  DB_NAME,
+  DB_USER,
+  DB_PASS,
 } = process.env;
 
 export const PREFIX_PAIRS = [

@@ -23,11 +23,6 @@ export default {
     ]
   },
 
-  router: {
-    base: UI_BASE_PATH,
-    trailingSlash: false,
-  },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     { src: '@likecoin/wallet-connector/dist/style.css', lang: 'css' },
