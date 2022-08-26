@@ -8,6 +8,7 @@ import { newSession } from './session.js';
 import { Session, User } from '../db.js';
 import { getBalance, verifyUser } from './verify.js';
 import api from './api.js';
+import { getUser } from '../client.js';
 
 const saltRounds = 10;
 
@@ -38,14 +39,15 @@ export async function depositUser(token, txHash) {
   const session = await Session.findOne({ where: { token } });
   if (!session) { throw new Error('SESSION_NOT_FOUND'); }
   const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
-  const { messages: [{ granter }] } = data.tx.body;
+  const { messages: [{ granter: sendAddress }] } = data.tx.body;
+  const { username } = getUser(session.discordId);
   const [user, created] = await User.findOrBuild({
     where: { discordId: session.discordId },
     defaults: {
-      receiveAddress: granter,
+      receiveAddress: sendAddress,
     },
   });
-  user.sendAddress = granter;
+  user.set({ username, sendAddress });
   await verifyUser(user);
   const { amount } = await getBalance(user);
   await user.save();

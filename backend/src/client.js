@@ -39,4 +39,8 @@ client.on('guildCreate', async (guild) => {
   await registerCommands(guild);
 });
 
+export function getUser(id) {
+  return client.users.cache.get(id);
+}
+
 export default client;
