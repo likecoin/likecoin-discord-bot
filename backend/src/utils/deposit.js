@@ -5,6 +5,9 @@ import bcrypt from 'bcrypt';
 import { ActionRowBuilder } from 'discord.js';
 import { UI_URL } from '../config.js';
 import { newSession } from './session.js';
+import { Session, User } from '../db.js';
+import { getBalance, verifyUser } from './verify.js';
+import api from './api.js';
 
 const saltRounds = 10;
 
@@ -29,4 +32,23 @@ export async function newDeposit(discordId, msg) {
     components: [row],
     ephemeral: true,
   };
+}
+
+export async function depositUser(token, txHash) {
+  const session = await Session.findOne({ where: { token } });
+  if (!session) { throw new Error('SESSION_NOT_FOUND'); }
+  const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
+  const { messages: [{ granter }] } = data.tx.body;
+  const [user, created] = await User.findOrBuild({
+    where: { discordId: session.discordId },
+    defaults: {
+      receiveAddress: granter,
+    },
+  });
+  user.sendAddress = granter;
+  await verifyUser(user);
+  const { amount } = await getBalance(user);
+  await user.save();
+  await session.destroy();
+  return { user, created, amount };
 }

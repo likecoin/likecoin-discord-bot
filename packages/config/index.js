@@ -8,7 +8,7 @@ const UI_BASE = process.env.UI_BASE || 'http://localhost:3000'
 export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
 export const BACKEND_PORT = 8000;
 export const BACKEND_URL = process.env.BACKEND_URL || `http://127.0.0.1:${BACKEND_PORT}`
-export const isDev = true // NODE_ENV === 'development'
+export const isDev = NODE_ENV === 'development'
 export const ENDPOINT = isDev
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'

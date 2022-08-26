@@ -32,10 +32,17 @@ export default {
       });
       return;
     }
-    const user = await registerAddress(id, inputAddress);
-    await interaction.reply({
-      content: `✅ Register ${user.username} with \`${user.receiveAddress}\``,
-      ephemeral: true,
-    });
+    try {
+      const user = await registerAddress(id, inputAddress);
+      await interaction.reply({
+        content: `✅ Register ${user.username} with \`${user.receiveAddress}\``,
+        ephemeral: true,
+      });
+    } catch (err) {
+      await interaction.reply({
+        content: `${err}`,
+        ephemeral: true,
+      });
+    }
   },
 };

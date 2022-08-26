@@ -20,3 +20,9 @@ export function changeAddressPrefix(address) {
   const newPrefix = prefixMap.get(prefix);
   return bech32.encode(newPrefix, words);
 }
+
+export function validateAddress(addr) {
+  if (addr.startsWith('cosmos1')) { return addr.length === 45; }
+  if (addr.startsWith('like1')) { return addr.length === 43; }
+  return false;
+}

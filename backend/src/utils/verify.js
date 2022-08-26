@@ -4,7 +4,7 @@ import api from './api.js';
 
 const MSG_TYPE_URL = '/cosmos.bank.v1beta1.MsgSend';
 
-export function verifyMemo(discordId, memo) {
+function verifyMemo(discordId, memo) {
   return bcrypt.compare(String(discordId), memo);
 }
 
@@ -53,10 +53,4 @@ export async function getBalance(user) {
     console.error(err);
     throw err;
   }
-}
-
-export function validateAddress(addr) {
-  if (addr.startsWith('cosmos1')) { return addr.length === 45; }
-  if (addr.startsWith('like1')) { return addr.length === 43; }
-  return false;
 }

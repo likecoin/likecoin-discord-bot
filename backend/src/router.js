@@ -1,8 +1,8 @@
 import express from 'express';
 
-import { Session, User } from './db.js';
+import { Session } from './db.js';
 import {
-  api, getBalance, verifyUser, formatCoin, registerAddress,
+  formatCoin, registerAddress, depositUser,
 } from './utils/index.js';
 import client from './client.js';
 
@@ -22,29 +22,15 @@ app.get('/api/token', async (req, res) => {
 app.post('/api/deposit', async (req, res, next) => {
   const { txHash, token } = req.body;
   try {
-    const session = await Session.findOne({ where: { token } });
-    if (!session) { throw new Error('SESSION_NOT_FOUND'); }
-    const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
-    const { messages: [{ granter }] } = data.tx.body;
-    const [user, created] = await User.findOrBuild({
-      where: { discordId: session.discordId },
-      defaults: {
-        receiveAddress: granter,
-      },
-    });
-    user.sendAddress = granter;
-    await verifyUser(user);
-    const { amount } = await getBalance(user);
-    await user.save();
-    await session.destroy();
-    res.json({ msg: 'success' });
+    const { user, amount, created } = await depositUser(token, txHash);
     client.users.cache.get(user.discordId).send({
       content: `Deposit ${formatCoin(amount)} from ${user.sendAddress}. ${created
         ? '\nReceiving address is set to deposit address by default.\nUse /register to change.'
         : ''}`,
       ephemeral: false,
     })
-      .catch(() => {}); // Ignore error if DM is disabled
+      .catch(console.warn); // Ignore error if DM is disabled
+    res.json({ msg: 'success' });
   } catch (err) {
     next(err);
   }
