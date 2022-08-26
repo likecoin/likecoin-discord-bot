@@ -8,7 +8,7 @@ import { newSession } from './session.js';
 
 const saltRounds = 10;
 
-export async function newDeposit(discordId) {
+export async function newDeposit(discordId, msg) {
   const hash = await bcrypt.hash(String(discordId), saltRounds);
   const { token } = await newSession(discordId);
   const depositURL = new URL(`${UI_URL}/deposit`);
@@ -25,7 +25,7 @@ export async function newDeposit(discordId) {
         .setURL(depositURL.toString()),
     );
   return {
-    content: 'Please sign the tx in the browser to finish deposit',
+    content: msg,
     components: [row],
     ephemeral: true,
   };

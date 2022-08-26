@@ -8,7 +8,10 @@ export default {
     .setName(COMMAND_NAME)
     .setDescription('Deposit fund'),
   async execute(interaction) {
-    const res = await newDeposit(interaction.user.id);
+    const res = await newDeposit(
+      interaction.user.id,
+      'Please open the link in the browser to continue',
+    );
     await interaction.reply(res);
   },
 };
