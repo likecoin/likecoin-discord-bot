@@ -69,7 +69,7 @@ export default {
     const receiver = await User.findOne({ where: { discordId: receiverUser.id } });
     if (!receiver) {
       await channel.send({
-        content: `${user} want to send LIKE to ${receiverUser} but they doesn't have receiving address, need to \`/register\` first.`,
+        content: `${user} want to send LIKE to ${receiverUser} but they doesn't have receiving address, please \`/register\` first to receive LIKE.`,
       });
       throw new Error('Canceled');
     }
