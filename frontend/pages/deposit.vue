@@ -30,7 +30,7 @@
       </div>
     </div>
     <p v-else class="error">
-      Link invalid. Please use /deposit to generate a new one
+      Link invalid. Please use <code>/deposit</code> to generate a new one
     </p>
   </main>
 </template>
