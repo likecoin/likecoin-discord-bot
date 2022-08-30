@@ -13,7 +13,7 @@
         Register
       </button>
       <p v-if="isSending">
-        Sending...
+        Registering...
       </p>
       <p v-if="isDone">
         Registered
