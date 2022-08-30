@@ -25,7 +25,7 @@
         {{ errorMsg }}
       </p>
       <div v-if="txHash">
-        <p>Authorized success! Now use /balance to check your deposit and /send to send the LIKE to others!</p>
+        <p>Authorized success! Now use <code>/balance</code> to check your deposit and <code>/send</code> to send the LIKE to others!</p>
         <p>Tx: <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a></p>
       </div>
     </div>
