@@ -20,7 +20,7 @@
       </p>
     </div>
     <p v-else class="error">
-      Link invalid. Please use /register to generate a new one
+      Link invalid. Please use <code>/register</code> to generate a new one
     </p>
     <p v-if="errorMsg" class="error">
       {{ errorMsg }}
