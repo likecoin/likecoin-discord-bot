@@ -8,16 +8,16 @@ const UI_BASE = process.env.UI_BASE || 'http://localhost:3000'
 export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
 export const BACKEND_PORT = 8000;
 export const BACKEND_URL = process.env.BACKEND_URL || `http://127.0.0.1:${BACKEND_PORT}`
-export const isDev = NODE_ENV === 'development'
-export const LIKECOIN_CHAIN_ENDPOINT = isDev
+export const IS_TESTNET = NODE_ENV !== 'production'
+export const LIKECOIN_CHAIN_ENDPOINT = IS_TESTNET
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
 
-export const WIDGET_ENDPOINT = isDev
+export const WIDGET_ENDPOINT = IS_TESTNET
   ? 'https://testnet.like.co'
   : 'https://like.co'
 
-export const WALLET_CONFIG = isDev
+export const WALLET_CONFIG = IS_TESTNET
   ? {
       chainId: 'likecoin-public-testnet-5',
       chainName: 'LikeCoin',
