@@ -48,7 +48,7 @@ app.post('/api/register', async (req, res, next) => {
       content: `Register receiving address to ${user.receiveAddress}`,
       ephemeral: false,
     })
-      .catch(() => {}); // Ignore error if DM is disabled
+      .catch(console.warn); // Ignore error if DM is disabled
   } catch (err) {
     next(err);
   }

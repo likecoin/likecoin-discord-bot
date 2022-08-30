@@ -46,10 +46,6 @@ Session.init({
 });
 
 export async function initDB() {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-  } catch (err) {
-    console.error(err);
-  }
+  await sequelize.authenticate();
+  await sequelize.sync();
 }

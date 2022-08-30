@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 export {
   NODE_ENV,
-  ENDPOINT,
+  LIKECOIN_CHAIN_ENDPOINT,
   API_WALLET_ADDRESS,
   WIDGET_ENDPOINT,
   WALLET_CONFIG,

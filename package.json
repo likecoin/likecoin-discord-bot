@@ -11,8 +11,8 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "yarn --cwd backend start",
-    "dev": "NODE_ENV=development yarn --cwd backend dev & yarn --cwd frontend dev",
+    "start": "NODE_ENV=production yarn --cwd backend start",
+    "dev": "yarn --cwd backend dev & yarn --cwd frontend dev",
     "lint": "yarn --cwd backend lint & yarn --cwd frontend lint",
     "generate": "yarn --cwd frontend generate",
     "delete": "yarn --cwd backend delete"

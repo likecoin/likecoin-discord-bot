@@ -1,7 +1,7 @@
 import { ISCNSigningClient } from '@likecoin/iscn-js';
 import { DirectSecp256k1HdWallet } from '@cosmjs/proto-signing';
 import {
-  ENDPOINT, MNEMONIC, API_WALLET_ADDRESS, WALLET_CONFIG,
+  LIKECOIN_CHAIN_ENDPOINT, MNEMONIC, API_WALLET_ADDRESS, WALLET_CONFIG,
 } from '../config.js';
 
 async function getSigningClient() {
@@ -14,7 +14,7 @@ async function getSigningClient() {
   }
 
   const signingClient = new ISCNSigningClient();
-  await signingClient.connectWithSigner(`${ENDPOINT}/rpc/`, signer);
+  await signingClient.connectWithSigner(`${LIKECOIN_CHAIN_ENDPOINT}/rpc/`, signer);
   return signingClient;
 }
 

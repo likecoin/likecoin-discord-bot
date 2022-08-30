@@ -1,9 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
 
-import { ENDPOINT } from '../config.js';
+import { LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
 
 export default axios.create({
-  baseURL: ENDPOINT,
+  baseURL: LIKECOIN_CHAIN_ENDPOINT,
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });

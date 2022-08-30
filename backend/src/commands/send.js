@@ -1,6 +1,6 @@
 import { ButtonBuilder, SlashCommandBuilder } from '@discordjs/builders';
 import { ActionRowBuilder } from 'discord.js';
-import { WALLET_CONFIG, ENDPOINT } from '../config.js';
+import { WALLET_CONFIG, LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
 import {
@@ -82,7 +82,7 @@ export default {
     const user = await User.findOne({ where: { discordId } });
     if (!user) {
       return interaction.editReply(
-        await newDeposit(discordId, 'You don't have any balance left. Please /deposit and try again'),
+        await newDeposit(discordId, 'You don\'t have any balance left. Please /deposit and try again'),
       );
     }
 
@@ -97,7 +97,7 @@ export default {
         new ButtonBuilder()
           .setLabel('Check Tx')
           .setStyle('Link')
-          .setURL(`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`),
+          .setURL(`${LIKECOIN_CHAIN_ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`),
       );
 
     return interaction.editReply({
