@@ -4,7 +4,7 @@ import { ApplicationCommandType } from 'discord.js';
 import sendCommand from './send.js';
 
 const COMMAND_NAME = 'LIKE this message';
-const amount = 5;
+const DEFAULT_LIKE_AMOUNT = 5;
 
 export default {
   data: new ContextMenuCommandBuilder()
@@ -21,11 +21,11 @@ export default {
     try {
       const receiver = await sendCommand.getReceiver(interaction, receiverUser);
       await interaction.editReply({
-        content: `Sending ${amount} LIKE to ${receiverUser}...`,
+        content: `Sending ${DEFAULT_LIKE_AMOUNT} LIKE to ${receiverUser}...`,
       });
-      await sendCommand.send(interaction, receiver.receiveAddress, amount);
+      await sendCommand.send(interaction, receiver.receiveAddress, DEFAULT_LIKE_AMOUNT);
       await channel.send({
-        content: `${user} sent ${amount} LIKE to ${receiverUser}`,
+        content: `${user} sent ${DEFAULT_LIKE_AMOUNT} LIKE to ${receiverUser}`,
         reply: {
           messageReference: msg.id,
         },

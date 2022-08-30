@@ -10,7 +10,7 @@ export default {
     .setName(COMMAND_NAME)
     .setDescription('Register address for receiving funds')
     .addStringOption((address) => address.setName(COMMAND_OPTION_NAME)
-      .setDescription('Cosmos address (cosmos1...) or Like address (like1...)')),
+      .setDescription('Like address (like1...)')),
   async execute(interaction) {
     const { id } = interaction.user;
     const inputAddress = interaction.options.getString(COMMAND_OPTION_NAME);

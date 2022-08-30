@@ -55,7 +55,7 @@ app.post('/api/register', async (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
   res.status(400).send(err.toString());
 });
 
