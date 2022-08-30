@@ -9,7 +9,7 @@ export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
 export const BACKEND_PORT = 8000;
 export const BACKEND_URL = process.env.BACKEND_URL || `http://127.0.0.1:${BACKEND_PORT}`
 export const isDev = NODE_ENV === 'development'
-export const ENDPOINT = isDev
+export const LIKECOIN_CHAIN_ENDPOINT = isDev
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
 
