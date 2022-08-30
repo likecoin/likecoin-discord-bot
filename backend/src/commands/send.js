@@ -88,7 +88,7 @@ export default {
 
     const { amount: balanceAmount } = await getBalance(user);
 
-    if (balanceAmount < nanoAmount) { throw new Error('Balance not enough'); }
+    if (balanceAmount < nanoAmount) { throw new Error('Balance not enough. Please /deposit and try again'); }
 
     const txHash = await send(user, receiveAddr, nanoAmount);
 
