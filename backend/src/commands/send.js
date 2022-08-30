@@ -82,7 +82,7 @@ export default {
     const user = await User.findOne({ where: { discordId } });
     if (!user) {
       return interaction.editReply(
-        await newDeposit(discordId, 'You haven\'t deposited. Please deposit and try again'),
+        await newDeposit(discordId, 'You don't have any balance left. Please /deposit and try again'),
       );
     }
 
