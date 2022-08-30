@@ -9,7 +9,7 @@
     </p>
     <div v-else-if="valid">
       <p>Authorized LikeCoin Discord Bot to send LIKE from your wallet</p>
-      <p>The money will keep in your wallet until you /send it</p>
+      <p>The amount of LIKE granted will still stay in your wallet until you send it</p>
       <label>Authorized amount: <input v-model="amount" type="number">{{ demon }}</label>
       <br>
       <button class="button" @click="createSendGrant">
