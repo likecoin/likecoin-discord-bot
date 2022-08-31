@@ -50,6 +50,7 @@ export default {
       })
       this.valid = valid
     } catch (err) {
+      console.error(err)
       this.errorMsg = err
     }
   },
@@ -68,6 +69,7 @@ export default {
         })
         this.isDone = true
       } catch (err) {
+        console.error(err)
         this.errorMsg = err
       } finally {
         this.isSending = false

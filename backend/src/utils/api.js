@@ -6,4 +6,5 @@ import { LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
 export default axios.create({
   baseURL: LIKECOIN_CHAIN_ENDPOINT,
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
+  timeout: 60000,
 });

@@ -69,8 +69,8 @@ export default {
   },
   methods: {
     async createSendGrant () {
-      await this.$store.dispatch('wallet/createSendGrant', { amount: this.amount, memo: this.hash })
       try {
+        await this.$store.dispatch('wallet/createSendGrant', { amount: this.amount, memo: this.hash })
         await this.$axios.post('/api/deposit', {
           token: this.token,
           txHash: this.txHash,

@@ -63,7 +63,6 @@ export const actions = {
     connector = new LikeCoinWalletConnector({
       availableMethods: [
         LikeCoinWalletConnectorMethodType.Keplr,
-        LikeCoinWalletConnectorMethodType.KeplrMobile,
         LikeCoinWalletConnectorMethodType.LikerId,
         LikeCoinWalletConnectorMethodType.Cosmostation,
       ],
