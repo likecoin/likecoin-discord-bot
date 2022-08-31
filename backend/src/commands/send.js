@@ -1,6 +1,6 @@
 import { ButtonBuilder, SlashCommandBuilder } from '@discordjs/builders';
 import { ActionRowBuilder } from 'discord.js';
-import { LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
+import { CHAIN_EXPLORER } from '../config.js';
 
 import { User } from '../db.js';
 import {
@@ -81,7 +81,6 @@ export default {
   async send(interaction, receiveAddr, amount) {
     const { user: { id: discordId } } = interaction;
     const nanoAmount = toNanoAmount(amount);
-    console.log(nanoAmount);
     const user = await User.findOne({ where: { discordId } });
     if (!user) {
       return interaction.editReply(
@@ -100,7 +99,7 @@ export default {
         new ButtonBuilder()
           .setLabel('Check Tx')
           .setStyle('Link')
-          .setURL(`${LIKECOIN_CHAIN_ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`),
+          .setURL(`${CHAIN_EXPLORER}/transactions/${txHash}`),
       );
 
     return interaction.editReply({

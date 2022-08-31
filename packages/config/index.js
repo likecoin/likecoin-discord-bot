@@ -17,6 +17,10 @@ export const WIDGET_ENDPOINT = IS_TESTNET
   ? 'https://testnet.like.co'
   : 'https://like.co'
 
+export const CHAIN_EXPLORER = IS_TESTNET
+  ? 'https://testnet.bigdipper.live/likecoin'
+  : 'https://bigdipper.live/likecoin'
+
 export const WALLET_CONFIG = IS_TESTNET
   ? {
       chainId: 'likecoin-public-testnet-5',
