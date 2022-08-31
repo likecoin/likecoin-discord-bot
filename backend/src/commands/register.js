@@ -2,7 +2,7 @@ import { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder } from '@discordjs
 import { newSession, registerAddress, replyInDM } from '../utils/index.js';
 import { UI_URL } from '../config.js';
 
-const COMMAND_NAME = 'register';
+const COMMAND_NAME = 'set_wallet';
 const COMMAND_OPTION_NAME = 'address';
 
 export default {
