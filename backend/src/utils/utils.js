@@ -46,7 +46,11 @@ export function changeAddressPrefix(address) {
 }
 
 export function validateAddress(addr) {
-  if (addr.startsWith('cosmos1')) { return addr.length === 45; }
-  if (addr.startsWith('like1')) { return addr.length === 43; }
-  return false;
+  try {
+    const { prefix } = bech32.decode(addr);
+    if (!prefixMap.has(prefix)) return false;
+    return true;
+  } catch (err) {
+    return false;
+  }
 }
