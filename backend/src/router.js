@@ -1,8 +1,7 @@
 import express from 'express';
 
-import { Session } from './db.js';
 import {
-  formatCoin, registerAddress, depositUser,
+  formatCoin, registerAddress, depositUser, getSession,
 } from './utils/index.js';
 import { getUser } from './client.js';
 
@@ -15,7 +14,7 @@ app.use(express.json());
 
 app.get('/api/token', async (req, res) => {
   const { token } = req.query;
-  const session = await Session.findOne({ where: { token } });
+  const session = await getSession(token);
   res.json({ valid: !!session });
 });
 
@@ -36,7 +35,7 @@ app.post('/api/deposit', async (req, res, next) => {
 app.post('/api/register', async (req, res, next) => {
   const { token, address } = req.body;
   try {
-    const session = await Session.findOne({ where: { token } });
+    const session = await getSession(token);
     if (!session) { throw new Error('SESSION_NOT_FOUND'); }
     const user = await registerAddress(session.discordId, address);
     await session.destroy();

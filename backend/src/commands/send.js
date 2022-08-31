@@ -73,7 +73,7 @@ export default {
       await channel.send({
         content: `${user} want to send LIKE to ${receiverUser} but they doesn't have receiving address, please \`/set_wallet\` first to receive LIKE.`,
       });
-      throw new Error('Canceled');
+      throw new Error('User not found');
     }
     return receiver;
   },

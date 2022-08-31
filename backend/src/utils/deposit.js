@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 
 import { ActionRowBuilder } from 'discord.js';
 import { UI_URL } from '../config.js';
-import { newSession } from './session.js';
-import { Session, User } from '../db.js';
+import { getSession, newSession } from './session.js';
+import { User } from '../db.js';
 import { getBalance, verifyUser } from './verify.js';
 import api from './api.js';
 import { getUser } from '../client.js';
@@ -36,7 +36,7 @@ export async function newDeposit(discordId, msg) {
 }
 
 export async function depositUser(token, txHash) {
-  const session = await Session.findOne({ where: { token } });
+  const session = await getSession(token);
   if (!session) { throw new Error('SESSION_NOT_FOUND'); }
   const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
   const { messages: [{ granter: sendAddress }] } = data.tx.body;
