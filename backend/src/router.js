@@ -7,9 +7,6 @@ import { getUser } from './client.js';
 
 const app = express();
 
-app.use(express.urlencoded({
-  extended: true,
-}));
 app.use(express.json());
 
 app.get('/api/token', async (req, res) => {
