@@ -1,10 +1,10 @@
 import { ButtonBuilder, SlashCommandBuilder } from '@discordjs/builders';
 import { ActionRowBuilder } from 'discord.js';
-import { WALLET_CONFIG, LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
+import { LIKECOIN_CHAIN_ENDPOINT } from '../config.js';
 
 import { User } from '../db.js';
 import {
-  getBalance, validateAddress, send, newDeposit,
+  getBalance, validateAddress, send, newDeposit, toNanoAmount,
 } from '../utils/index.js';
 
 const COMMAND_NAME = 'send';
@@ -78,7 +78,8 @@ export default {
 
   async send(interaction, receiveAddr, amount) {
     const { user: { id: discordId } } = interaction;
-    const nanoAmount = (10 ** WALLET_CONFIG.coinDecimals) * amount;
+    const nanoAmount = toNanoAmount(amount);
+    console.log(nanoAmount);
     const user = await User.findOne({ where: { discordId } });
     if (!user) {
       return interaction.editReply(

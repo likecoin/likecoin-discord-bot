@@ -23,7 +23,7 @@ app.post('/api/deposit', async (req, res, next) => {
   const { txHash, token } = req.body;
   try {
     const { user, amount, created } = await depositUser(token, txHash);
-    getUser(user.discordId).send({
+    (await getUser(user.discordId)).send({
       content: `Deposit ${formatCoin(amount)} from ${user.sendAddress}. ${created
         ? '\nReceiving address is set to deposit address by default.\nUse /register to change.'
         : ''}`,
@@ -44,7 +44,7 @@ app.post('/api/register', async (req, res, next) => {
     const user = await registerAddress(session.discordId, address);
     await session.destroy();
     res.json({ msg: 'success' });
-    getUser(user.discordId).send({
+    (await getUser(user.discordId)).send({
       content: `Register receiving address to ${user.receiveAddress}`,
       ephemeral: false,
     })

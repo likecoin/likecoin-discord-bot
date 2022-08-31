@@ -40,7 +40,7 @@ export async function depositUser(token, txHash) {
   if (!session) { throw new Error('SESSION_NOT_FOUND'); }
   const { data } = await api.get(`/cosmos/tx/v1beta1/txs/${txHash}`);
   const { messages: [{ granter: sendAddress }] } = data.tx.body;
-  const { username } = getUser(session.discordId);
+  const { username } = await getUser(session.discordId);
   const [user, created] = await User.findOrBuild({
     where: { discordId: session.discordId },
     defaults: {

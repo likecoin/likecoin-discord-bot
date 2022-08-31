@@ -40,7 +40,7 @@ client.on('guildCreate', async (guild) => {
 });
 
 export function getUser(id) {
-  return client.users.cache.get(id);
+  return client.users.fetch(id);
 }
 
 export default client;

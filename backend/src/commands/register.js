@@ -39,6 +39,7 @@ export default {
         ephemeral: true,
       });
     } catch (err) {
+      console.error(err);
       await interaction.reply({
         content: `${err}`,
         ephemeral: true,

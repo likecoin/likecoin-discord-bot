@@ -3,7 +3,7 @@ import { validateAddress } from './utils.js';
 import { getUser } from '../client.js';
 
 export async function registerAddress(discordId, address) {
-  const { username } = getUser(discordId);
+  const { username } = await getUser(discordId);
   if (!validateAddress(address)) { throw new Error('Invalid address'); }
   const [user] = await User.findOrBuild({
     where: { discordId },

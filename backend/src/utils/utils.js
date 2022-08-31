@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { bech32 } from 'bech32';
 import {
   WALLET_CONFIG, PREFIX_PAIRS,
@@ -10,8 +11,12 @@ PREFIX_PAIRS.forEach(([first, second]) => {
 });
 
 export function formatCoin(nanoAmount) {
-  const amount = Number(nanoAmount) / (10 ** WALLET_CONFIG.coinDecimals);
+  const amount = BigNumber(nanoAmount).shiftedBy(-WALLET_CONFIG.coinDecimals);
   return `${amount} ${WALLET_CONFIG.coinDenom}`;
+}
+
+export function toNanoAmount(amount) {
+  return BigNumber(amount).shiftedBy(WALLET_CONFIG.coinDecimals);
 }
 
 export function changeAddressPrefix(address) {
