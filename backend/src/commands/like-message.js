@@ -24,12 +24,14 @@ export default {
         content: `Sending ${DEFAULT_LIKE_AMOUNT} LIKE to ${receiverUser}...`,
       });
       await sendCommand.send(interaction, receiver.receiveAddress, DEFAULT_LIKE_AMOUNT);
-      await channel.send({
-        content: `${user} sent ${DEFAULT_LIKE_AMOUNT} LIKE to ${receiverUser}`,
-        reply: {
-          messageReference: msg.id,
-        },
-      });
+      if (interaction.inGuild()) {
+        await channel.send({
+          content: `${user} sent ${DEFAULT_LIKE_AMOUNT} LIKE to ${receiverUser}`,
+          reply: {
+            messageReference: msg.id,
+          },
+        });
+      }
     } catch (err) {
       console.error(err);
       await interaction.editReply({

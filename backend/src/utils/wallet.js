@@ -26,7 +26,7 @@ export async function send(user, receiverAddr, amount) {
     receiverAddr,
     [{
       denom: WALLET_CONFIG.coinMinimalDenom,
-      amount: String(amount),
+      amount,
     }],
   );
   return res.transactionHash;

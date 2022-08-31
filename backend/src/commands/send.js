@@ -53,9 +53,11 @@ export default {
         ephemeral: true,
       });
       await this.send(interaction, receiveAddr, amount);
-      await channel.send({
-        content: `${user} sent ${amount} LIKE to ${receiverUser || receiveAddr}`,
-      });
+      if (interaction.inGuild()) {
+        await channel.send({
+          content: `${user} sent ${amount} LIKE to ${receiverUser || receiveAddr}`,
+        });
+      }
     } catch (err) {
       interaction.editReply({
         content: `${err}`,
@@ -91,7 +93,7 @@ export default {
 
     if (balanceAmount < nanoAmount) { throw new Error('Balance not enough. Please /deposit and try again'); }
 
-    const txHash = await send(user, receiveAddr, nanoAmount);
+    const txHash = await send(user, receiveAddr, nanoAmount.toString());
 
     const row = new ActionRowBuilder()
       .addComponents(
