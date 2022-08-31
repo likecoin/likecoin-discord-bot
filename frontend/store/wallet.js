@@ -33,7 +33,6 @@ export const mutations = {
   },
 
   logout (state) {
-    connector.disconnect()
     state.walletAddress = ''
   },
 
@@ -74,6 +73,11 @@ export const actions = {
     if (session?.accounts) {
       commit('setWallet', session)
     }
+  },
+
+  async logout ({ commit }) {
+    await connector.disconnect()
+    commit('logout')
   },
 
   async connect ({ commit }) {

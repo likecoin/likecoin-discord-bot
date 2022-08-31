@@ -7,18 +7,18 @@
     <p v-else-if="$fetchState.error" class="error">
       An error occurs...
     </p>
-    <div v-else-if="valid">
+    <template v-else-if="valid">
       <p>Register <code>{{ walletAddress }}</code> as your receiving address</p>
       <button v-if="walletAddress && !isDone" class="button" @click="register">
         Register
       </button>
-      <p v-if="isSending">
-        Registering...
-      </p>
       <p v-if="isDone">
         Registered
       </p>
-    </div>
+      <p v-else-if="isSending">
+        Registering...
+      </p>
+    </template>
     <p v-else class="error">
       Link invalid. Please use <code>/set_wallet</code> to generate a new one
     </p>
@@ -66,10 +66,11 @@ export default {
           token: this.token,
           address: this.walletAddress,
         })
-        this.isSending = false
         this.isDone = true
       } catch (err) {
         this.errorMsg = err
+      } finally {
+        this.isSending = false
       }
     },
   },

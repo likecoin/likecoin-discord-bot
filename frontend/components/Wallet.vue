@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import { WALLET_CONFIG } from '@likecoin-discord-bot/config'
 
 export default {
@@ -41,9 +40,9 @@ export default {
     init () {
       this.$store.dispatch('wallet/init')
     },
-    ...mapMutations({
-      logout: 'wallet/logout',
-    })
+    logout () {
+      this.$store.dispatch('wallet/logout')
+    },
   },
 }
 </script>
