@@ -1,6 +1,6 @@
 import { LikeCoinWalletConnector, LikeCoinWalletConnectorMethodType } from '@likecoin/wallet-connector'
 import { ISCNSigningClient } from '@likecoin/iscn-js'
-import { WALLET_CONFIG, API_WALLET_ADDRESS, EXPIRATION } from '@likecoin-discord-bot/config'
+import { WALLET_CONFIG, API_WALLET_ADDRESS, LIKECOIN_CHAIN_ENDPOINT, SEND_GRANT_EXPIRATION } from '@likecoin-discord-bot/config'
 
 let connector = null
 
@@ -21,8 +21,8 @@ export const getters = {
   },
 
   txURL (state) {
-    return state.connector
-      ? `${state.connector.restURL}/cosmos/tx/v1beta1/txs/${state.txHash}`
+    return connector
+      ? `${LIKECOIN_CHAIN_ENDPOINT}/cosmos/tx/v1beta1/txs/${state.txHash}`
       : ''
   },
 }
@@ -96,7 +96,7 @@ export const actions = {
     )
 
     const expire = new Date()
-    expire.setDate(expire.getDate() + EXPIRATION)
+    expire.setDate(expire.getDate() + SEND_GRANT_EXPIRATION)
 
     try {
       const result = await client.createSendGrant(

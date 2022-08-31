@@ -26,7 +26,7 @@
       </p>
       <div v-if="txHash">
         <p>Authorized success! Now use <code>/balance</code> to check your deposit and <code>/send</code> to send the LIKE to others!</p>
-        <p>Tx: <a :href="`${ENDPOINT}/cosmos/tx/v1beta1/txs/${txHash}`">{{ txHash }}</a></p>
+        <p>Tx: <a :href="txURL">{{ txHash }}</a></p>
       </div>
     </div>
     <p v-else class="error">
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { WALLET_CONFIG, ENDPOINT } from '@/config'
+import { mapState, mapGetters } from 'vuex'
+import { WALLET_CONFIG } from '@/config'
 
 export default {
   name: 'Deposit',
@@ -48,7 +48,6 @@ export default {
     denom: WALLET_CONFIG.coinDenom,
     valid: false,
     errorMsg: '',
-    ENDPOINT,
   }),
   async fetch () {
     const { hash, token } = this.$route.query
@@ -64,6 +63,9 @@ export default {
       error: state => state.error,
       txHash: state => state.txHash,
     }),
+    ...mapGetters('wallet', [
+      'txURL',
+    ]),
   },
   methods: {
     async createSendGrant () {
