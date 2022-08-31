@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { newDeposit } from '../utils/index.js';
+import { newDeposit, replyInDM } from '../utils/index.js';
 
 const COMMAND_NAME = 'deposit';
 
@@ -12,6 +12,6 @@ export default {
       interaction.user.id,
       'Please open the link in the browser to continue',
     );
-    await interaction.reply(res);
+    await replyInDM(interaction, res);
   },
 };

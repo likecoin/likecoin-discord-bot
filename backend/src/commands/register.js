@@ -1,5 +1,5 @@
 import { SlashCommandBuilder, ButtonBuilder, ActionRowBuilder } from '@discordjs/builders';
-import { newSession, registerAddress } from '../utils/index.js';
+import { newSession, registerAddress, replyInDM } from '../utils/index.js';
 import { UI_URL } from '../config.js';
 
 const COMMAND_NAME = 'register';
@@ -25,7 +25,7 @@ export default {
             .setStyle('Link')
             .setURL(url.toString()),
         );
-      await interaction.reply({
+      await replyInDM(interaction, {
         content: 'Please link your wallet in the browser to finish register',
         components: [row],
         ephemeral: true,
@@ -34,7 +34,7 @@ export default {
     }
     try {
       const user = await registerAddress(id, inputAddress);
-      await interaction.reply({
+      await replyInDM(interaction, {
         content: `✅ Register ${user.username} with \`${user.receiveAddress}\``,
         ephemeral: true,
       });

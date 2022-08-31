@@ -19,6 +19,25 @@ export function toNanoAmount(amount) {
   return BigNumber(amount).shiftedBy(WALLET_CONFIG.coinDecimals);
 }
 
+export async function replyInDM(interaction, msg) {
+  if (interaction.inGuild()) {
+    try {
+      await interaction.user.send(msg);
+      await interaction.reply({
+        content: 'Please open DM to continue',
+        ephemeral: true,
+      });
+    } catch (err) {
+      await interaction.reply({
+        content: 'Please allow "Direct Messages" in this server\'s privacy settings and try again',
+        ephemeral: true,
+      });
+    }
+    return;
+  }
+  await interaction.reply(msg);
+}
+
 export function changeAddressPrefix(address) {
   const { prefix, words } = bech32.decode(address);
   if (!prefixMap.has(prefix)) throw new Error('PREFIX_NOT_INCLUDED');
