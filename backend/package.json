@@ -1,0 +1,41 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "lint": "eslint --fix --ext .js .",
+    "start": "node src/index.js",
+    "delete": "node src/delete-commands.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.28.13",
+    "@cosmjs/stargate": "^0.28.13",
+    "@discordjs/builders": "^1.1.0",
+    "@discordjs/rest": "^1.0.1",
+    "@likecoin-discord-bot/config": "1.0.0",
+    "@likecoin/iscn-js": "^0.2.2",
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "bech32": "^2.0.0",
+    "bignumber.js": "^9.1.0",
+    "cosmjs-types": "^0.5.0",
+    "discord-api-types": "^0.37.1",
+    "discord.js": "^14.1.2",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "qs": "^6.11.0",
+    "sequelize": "^6.21.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19"
+  }
+}

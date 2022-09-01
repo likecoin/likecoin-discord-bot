@@ -1,12 +1,12 @@
 // Require the necessary discord.js classes
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import { TOKEN } from './config.js';
 import { registerCommands, commands } from './register-commands.js';
 
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.DirectMessages,
   ],
 });
 
@@ -16,11 +16,9 @@ commands.forEach(
   (command) => client.commands.set(command.data.name, command),
 );
 
-client.once('ready', () => {
-  Promise.all(
-    client.guilds.cache.map(registerCommands),
-  )
-    .then(() => console.log('Ready'));
+client.once('ready', async () => {
+  await registerCommands();
+  console.log('Ready');
 });
 
 client.on('interactionCreate', async (interaction) => {
@@ -41,4 +39,8 @@ client.on('guildCreate', async (guild) => {
   await registerCommands(guild);
 });
 
-client.login(TOKEN);
+export function getUser(id) {
+  return client.users.fetch(id);
+}
+
+export default client;

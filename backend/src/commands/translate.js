@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { changeAddressPrefix } from '../util.js';
+import { changeAddressPrefix } from '../utils/index.js';
 
 const COMMAND_NAME = 'translate';
 const COMMAND_OPTION_NAME = 'address';

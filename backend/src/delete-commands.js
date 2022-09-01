@@ -17,17 +17,12 @@ const client = new Client({
 });
 
 client.once('ready', () => {
-  Promise.all(
-    client.guilds.cache.map(
-      (guild) => rest.put(Routes.applicationGuildCommands(CLIENT_ID, guild.id), { body: [] })
-        .then(() => console.log(`Successfully deleted all application commands for ${guild.name}.`))
-        .catch(console.error),
-    ),
-  )
+  rest.put(Routes.applicationCommands(CLIENT_ID), { body: [] })
     .then(() => {
-      console.log('Deleted all commands from all servers');
-      process.exit(0);
-    });
+      console.log('Successfully deleted all application commands.');
+    })
+    .catch(console.error)
+    .finally(() => process.exit(0));
 });
 
 client.login(TOKEN);

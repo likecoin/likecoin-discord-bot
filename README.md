@@ -11,3 +11,6 @@
 
 4. Click below link to invite bot to LikeCoin Discord:
 https://discord.com/api/oauth2/authorize?client_id=968159446381522966&permissions=2048&scope=bot%20applications.commands
+
+## Commands
+See [commands](docs/commands.md)
