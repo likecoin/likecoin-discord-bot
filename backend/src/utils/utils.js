@@ -24,7 +24,7 @@ export async function replyInDM(interaction, msg) {
     try {
       await interaction.user.send(msg);
       await interaction.reply({
-        content: 'Please open DM to continue',
+        content: 'Please direct message me to continue',
         ephemeral: true,
       });
     } catch (err) {
