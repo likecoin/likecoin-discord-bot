@@ -10,6 +10,8 @@
     "backend",
     "packages/*"
   ],
+  "type": "module",
+  "main": "./index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "IS_TESTNET=TRUE yarn --cwd backend dev & yarn --cwd frontend dev",
