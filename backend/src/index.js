@@ -6,3 +6,5 @@ import router from './router.js';
 initDB();
 router.listen(BACKEND_PORT);
 client.login(TOKEN);
+// eslint-disable-next-line no-console
+console.log(`Server listening on port ${BACKEND_PORT}`);
