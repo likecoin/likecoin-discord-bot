@@ -1,15 +1,15 @@
-export const { NODE_ENV } = process.env
+export const { NODE_ENV, IS_TESTNET } = process.env
+export const IS_DEV = NODE_ENV !== 'production'
 export const IPFS_GATEWAY = 'https://cloudflare-ipfs.com'
 export const ARWEAVE_GATEWAY = 'https://arweave.net'
-export const API_WALLET_ADDRESS = process.env.API_WALLET_ADDRESS || 'like1sdz7wpzdazxekr6f4sx33rtc7nra6lu9nxe7yh'
+export const API_WALLET_ADDRESS = process.env.API_WALLET_ADDRESS || 'like1nvpr74cdkx270lcual3dvzr3t3jpy7qufph5a2'
 export const SEND_GRANT_EXPIRATION = 30 // 30 days
 export const SESSION_EXPIRATION = 15 // 15 minutes
-export const UI_BASE_PATH = '';
-const UI_BASE = process.env.UI_BASE || 'http://localhost:3000'
+export const UI_BASE_PATH = IS_DEV ? '/' : '/discord/';
+const UI_BASE = process.env.UI_BASE || IS_DEV ? 'http://localhost:3000' : `https://api.${IS_TESTNET ? 'rinkeby.' : 'like.co'}`
 export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
-export const BACKEND_PORT = 8000;
+export const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
 export const BACKEND_URL = process.env.BACKEND_URL || `http://127.0.0.1:${BACKEND_PORT}`
-export const IS_TESTNET = NODE_ENV !== 'production'
 export const LIKECOIN_CHAIN_ENDPOINT = IS_TESTNET
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'

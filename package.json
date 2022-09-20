@@ -11,10 +11,10 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "NODE_ENV=production yarn --cwd backend start",
-    "dev": "yarn --cwd backend dev & yarn --cwd frontend dev",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "IS_TESTNET=TRUE yarn --cwd backend dev & yarn --cwd frontend dev",
     "lint": "yarn --cwd backend lint & yarn --cwd frontend lint",
-    "generate": "yarn --cwd frontend generate",
+    "generate": "NODE_ENV=production yarn --cwd frontend generate",
     "delete": "yarn --cwd backend delete"
   }
 }
