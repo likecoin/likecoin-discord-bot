@@ -9,6 +9,7 @@ export {
   WALLET_CONFIG,
   UI_URL,
   BACKEND_PORT,
+  BACKEND_HOST,
   SESSION_EXPIRATION,
 } from '@likecoin-discord-bot/config';
 

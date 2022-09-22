@@ -8,8 +8,9 @@ export const SESSION_EXPIRATION = 15 // 15 minutes
 export const UI_BASE_PATH = IS_DEV ? '/' : '/discord/';
 const UI_BASE = process.env.UI_BASE || IS_DEV ? 'http://localhost:3000' : `https://api.${IS_TESTNET ? 'rinkeby.' : 'like.co'}`
 export const UI_URL = `${UI_BASE}${UI_BASE_PATH}`;
+export const BACKEND_HOST = process.env.BACKEND_HOST || '127.0.0.1';
 export const BACKEND_PORT = process.env.BACKEND_PORT || 8000;
-export const BACKEND_URL = process.env.BACKEND_URL || `http://127.0.0.1:${BACKEND_PORT}`
+export const BACKEND_URL = process.env.BACKEND_URL || `http://${BACKEND_HOST}:${BACKEND_PORT}`
 export const LIKECOIN_CHAIN_ENDPOINT = IS_TESTNET
   ? 'https://node.testnet.like.co'
   : 'https://mainnet-node.like.co'
