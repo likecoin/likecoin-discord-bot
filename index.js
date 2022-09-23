@@ -1,4 +1,5 @@
 import express from 'express';
+import helmet from 'helmet';
 import { initDB } from './backend/src/db.js';
 import {
   TOKEN, UI_BASE_PATH, BACKEND_PORT, BACKEND_HOST
@@ -8,6 +9,7 @@ import router from './backend/src/router.js';
 
 initDB();
 const app = express();
+app.use(helmet());
 app.use(UI_BASE_PATH, router);
 app.use(UI_BASE_PATH, express.static('frontend/dist'));
 app.listen(BACKEND_PORT, BACKEND_HOST);
