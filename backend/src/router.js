@@ -9,10 +9,18 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/api/token', async (req, res) => {
-  const { token } = req.query;
-  const session = await getSession(token);
-  res.json({ valid: !!session });
+app.get('/api/healthz', async (req, res) => {
+  res.sendStatus(200);
+});
+
+app.get('/api/token', async (req, res, next) => {
+  try {
+    const { token } = req.query;
+    const session = await getSession(token);
+    res.json({ valid: !!session });
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.post('/api/deposit', async (req, res, next) => {
@@ -45,8 +53,14 @@ app.post('/api/register', async (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(400).send(err.toString());
+  console.error(JSON.stringify({
+    message: err.toString(), stack: err.stack,
+  }));
+  if (res.headersSent) {
+    next(err);
+    return;
+  }
+  res.sendStatus(500);
 });
 
 export default app;
