@@ -50,7 +50,11 @@ export async function getBalance(user) {
     await verifyUser(user);
     return await queryBalance(user);
   } catch (err) {
-    console.error(err);
-    throw err;
+    console.error(JSON.stringify(err));
+    return {
+      amount: 0,
+      denom: '',
+      expiration: 0,
+    };
   }
 }

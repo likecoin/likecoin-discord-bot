@@ -16,6 +16,7 @@ export default {
       const user = await User.findOne({ where: { discordId } });
       if (!user) { throw new Error('User not found'); }
       const { expiration, denom, amount: nanoAmount } = await getBalance(user);
+      if (!nanoAmount || nanoAmount === '0') { throw new Error('Balance not found. Please /deposit and try again'); }
       if (denom !== WALLET_CONFIG.coinMinimalDenom) { throw new Error(`Wrong denom: ${denom}`); }
       await interaction.reply({
         content: `sending address: \`${user.sendAddress}\`
