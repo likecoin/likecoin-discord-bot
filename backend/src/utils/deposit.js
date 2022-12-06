@@ -9,6 +9,7 @@ import { User } from '../db.js';
 import { getBalance, verifyUser } from './verify.js';
 import api from './api.js';
 import { getUser } from '../client.js';
+import { sleep } from './utils.js';
 
 const saltRounds = 10;
 
@@ -48,7 +49,12 @@ export async function depositUser(token, txHash) {
     },
   });
   user.set({ username, sendAddress });
-  await verifyUser(user);
+  try {
+    await verifyUser(user);
+  } catch (error) {
+    await sleep(3000);
+    await verifyUser(user);
+  }
   const { amount } = await getBalance(user);
   await user.save();
   await session.destroy();

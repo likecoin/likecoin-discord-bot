@@ -5,6 +5,6 @@ export { newSession, getSession } from './session.js';
 export { default as api } from './api.js';
 export {
   formatCoin, toNanoAmount, changeAddressPrefix, validateAddress,
-  replyInDM,
+  replyInDM, sleep,
 } from './utils.js';
 export { verifyUser, getBalance } from './verify.js';

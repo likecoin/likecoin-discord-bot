@@ -54,3 +54,7 @@ export function validateAddress(addr) {
     return false;
   }
 }
+
+export function sleep(ms) {
+  return new Promise((resolve) => { setTimeout(resolve, ms); });
+}
